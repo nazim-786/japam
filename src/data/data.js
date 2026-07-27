@@ -54,4 +54,62 @@ export const products = [
       "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500",
     discount: "71% OFF",
   },
+
+  // NEW PRODUCTS
+
+  {
+    id: 6,
+    name: "7 Chakra Healing Bracelet",
+    rating: 5,
+    reviews: 81,
+    price: 999,
+    originalPrice: 1599,
+    image:
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500",
+    discount: "38% OFF",
+  },
+  {
+    id: 7,
+    name: "Karungali Elemental Bracelet",
+    rating: 5,
+    reviews: 9,
+    price: 699,
+    originalPrice: 1299,
+    image:
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500",
+    discount: "46% OFF",
+  },
+  {
+    id: 8,
+    name: "Pyrite Prosperity Bracelet",
+    rating: 5,
+    reviews: 37,
+    price: 749,
+    originalPrice: 1399,
+    image:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=500",
+    discount: "47% OFF",
+  },
+  {
+    id: 9,
+    name: "Tiger Eye Protection Bracelet",
+    rating: 5,
+    reviews: 92,
+    price: 849,
+    originalPrice: 1499,
+    image:
+      "https://images.unsplash.com/photo-1506629905607-d9d8e2f4d3e4?w=500",
+    discount: "43% OFF",
+  },
+  {
+    id: 10,
+    name: "Natural Rudraksha Kada",
+    rating: 5,
+    reviews: 64,
+    price: 1099,
+    originalPrice: 1899,
+    image:
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500",
+    discount: "42% OFF",
+  },
 ];

@@ -1,11 +1,11 @@
-import './App.css';
-import AnnouncementBar from './components/AnnouncementBar';
-import Navbar from './components/Navbar';
-import CategoryStrip from './components/CategoryStrip';
-import { CartProvider } from './context/CartContext';
-import HeroSection from './components/HeroSection';
-import ProductCarousel from './components/ProductCarousel';
-import ProductSection from './components/ProductSection';
+import "./App.css";
+import AnnouncementBar from "./components/AnnouncementBar";
+import Navbar from "./components/Navbar";
+import CategoryStrip from "./components/CategoryStrip";
+import HeroSection from "./components/HeroSection";
+import ProductSection from "./components/ProductSection";
+import LabTestedSection from "./components/LabTestedSection";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
@@ -14,8 +14,8 @@ function App() {
       <Navbar />
       <CategoryStrip />
       <HeroSection />
-      <ProductCarousel />
       <ProductSection />
+      <LabTestedSection />
     </CartProvider>
   );
 }
