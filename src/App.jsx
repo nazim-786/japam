@@ -5,6 +5,8 @@ import CategoryStrip from "./components/CategoryStrip";
 import HeroSection from "./components/HeroSection";
 import ProductSection from "./components/ProductSection";
 import LabTestedSection from "./components/LabTestedSection";
+import CollectionCarousel from "./components/CollectionCarousel";
+import LatestTrending from "./components/LatestTrending";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
       <HeroSection />
       <ProductSection />
       <LabTestedSection />
+      <CollectionCarousel />
+      <LatestTrending />
     </CartProvider>
   );
 }
