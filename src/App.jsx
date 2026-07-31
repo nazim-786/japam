@@ -7,6 +7,8 @@ import ProductSection from "./components/ProductSection";
 import LabTestedSection from "./components/LabTestedSection";
 import CollectionCarousel from "./components/CollectionCarousel";
 import LatestTrending from "./components/LatestTrending";
+import PurposeSection from "./components/PurposeSection";
+// import ExploreEnergyStones from "./components/ExploreEnergyStones";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
       <LabTestedSection />
       <CollectionCarousel />
       <LatestTrending />
+      <PurposeSection />
+     {/* <ExploreEnergyStones /> */}
     </CartProvider>
   );
 }
