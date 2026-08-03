@@ -3,20 +3,22 @@ import { products } from "../data/products";
 
 export default function ExploreEnergyStones() {
   return (
-    <section className="bg-[#f3eee5] py-10">
-      <div className="max-w-[1320px] mx-auto px-4">
+    <section className="bg-[#f3eee5] py-12">
+      <div className="max-w-[1320px] mx-auto px-5 lg:px-8">
 
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-4xl font-bold">
+        {/* Heading */}
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-[24px] md:text-[28px] font-bold text-[#1f2940]">
             Explore Energy Stones
           </h2>
 
-          <button className="underline">
+          <button className="text-[16px] underline text-[#1f2940] hover:opacity-80 transition">
             View all
           </button>
         </div>
 
-        <div className="grid grid-cols-4 gap-8">
+        {/* Products */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {products.map((product) => (
             <ProductCard
               key={product.id}

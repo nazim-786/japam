@@ -24,51 +24,80 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div>
+    <div className="group">
+      {/* Image Section */}
       <div className="relative overflow-hidden rounded-xl">
-        
-        <div className="absolute top-0 left-0 bg-red-500 text-white px-3 py-1 z-10">
+
+        {/* Discount Badge */}
+        <div className="absolute top-0 left-0 bg-[#d64045] text-white text-sm font-semibold px-3 py-1 z-20">
           {product.discount} Off
         </div>
 
         <img
           src={product.images[currentImage]}
           alt={product.title}
-          className="w-full h-[300px] object-cover"
+          className="w-full h-[300px] md:h-[330px] object-cover transition-transform duration-500"
         />
 
+        {/* Left Arrow */}
         <button
           onClick={prevImage}
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center"
+          className="
+            absolute left-3 top-1/2 -translate-y-1/2
+            bg-white w-11 h-11 rounded-full
+            flex items-center justify-center
+            shadow-md
+            opacity-0 group-hover:opacity-100
+            transition-all duration-300
+            z-10
+          "
         >
           <FaChevronLeft />
         </button>
 
+        {/* Right Arrow */}
         <button
           onClick={nextImage}
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center"
+          className="
+            absolute right-3 top-1/2 -translate-y-1/2
+            bg-white w-11 h-11 rounded-full
+            flex items-center justify-center
+            shadow-md
+            opacity-0 group-hover:opacity-100
+            transition-all duration-300
+            z-10
+          "
         >
           <FaChevronRight />
         </button>
       </div>
 
-      <h3 className="mt-3 font-semibold text-lg">
+      {/* Product Title */}
+      <h3 className="mt-4 text-[18px] font-semibold text-[#1f2940] leading-8">
         {product.title}
       </h3>
 
+      {/* Rating */}
       <div className="flex items-center gap-1 mt-2">
         {[...Array(5)].map((_, i) => (
-          <FaStar key={i} className="text-red-500" />
+          <FaStar
+            key={i}
+            className="text-[#d64045] text-sm"
+          />
         ))}
-        <span>({product.reviews})</span>
+
+        <span className="text-[16px] text-[#4b5563] ml-1">
+          ({product.reviews})
+        </span>
       </div>
 
-      <div className="mt-2 flex gap-3 items-center">
-        <span className="font-bold text-2xl">
+      {/* Price */}
+      <div className="mt-2 flex items-center gap-3">
+        <span className="font-bold text-[18px] md:text-[20px] text-[#1f2940]">
           ₹{product.price}
         </span>
 
-        <span className="line-through text-gray-500">
+        <span className="line-through text-[#6b7280] text-[16px]">
           ₹{product.oldPrice}
         </span>
       </div>
