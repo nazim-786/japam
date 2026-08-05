@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import {products} from "../data/products";
+import combo from "../data/combo";
 import {
   FaStar,
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
+
 const ITEMS_PER_VIEW = 4;
 
-const ProductCarousel = () => {
+const SaveCombos = () => {
   const [imageIndexes, setImageIndexes] = useState({});
-   const [startIndex, setStartIndex] = useState(0);
-  
+  const [startIndex, setStartIndex] = useState(0);
 
-  const visibleProducts = products.slice(
+  const visibleProducts = combo.slice(
     startIndex,
     startIndex + ITEMS_PER_VIEW
   );
 
 const nextProducts = () => {
-  if (startIndex < products.length - ITEMS_PER_VIEW) {
+  if (startIndex < combo.length - ITEMS_PER_VIEW) {
     setStartIndex((prev) => prev + 1);
   }
 };
@@ -54,45 +54,44 @@ const prevProducts = () => {
   };
 
   return (  
-    <section className="bg-[#fff3df] pt-6 pb-14">
+    <section className="bg-[#fff3df] pt-4 pb-9">
       <div className="max-w-[1400px] mx-auto px-7">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-[28px] sm:text-[34px] lg:text-[42px] font-bold">
-            Best Rakhi Ever
+          <h2 className="text-[42px] font-bold text-[#1F2340] leading-[1.2]">
+            Save More With Combos
           </h2>
 
           <button
               className="
-    text-[17px]
-    text-[#1F2340]
-    border-b border-[#1F2340]
-    pb-[2px]
-    hover:opacity-80
-    transition-all duration-300
-  "
+                     text-[17px]
+                     text-[#1F2340]
+                          border-b border-[#1F2340]
+                                  pb-[2px]
+                                hover:opacity-80
+                                 transition-all duration-300 "
 >
-  View all
-</button>
+                                   View all
+        </button>
         </div>
 
         <div className="relative">
 
           {/* Section Slider Arrows */}
-          <div className="hidden lg:flex absolute right-[-24px] top-[170px] z-50 flex-col gap-3">
+          <div className="absolute right-[-24px] top-[170px] z-50 flex flex-col gap-3">
 
             <button
               onClick={nextProducts}
               disabled={
-                startIndex + ITEMS_PER_VIEW >= products.length
+                startIndex + ITEMS_PER_VIEW >= combo.length
               }
               className={`
                 w-12 h-12 rounded-full
                 flex items-center justify-center
                 shadow-md
                 ${
-                  startIndex + ITEMS_PER_VIEW >= products.length
+                  startIndex + ITEMS_PER_VIEW >= combo.length
                     ? "bg-gray-300 text-white cursor-not-allowed"
                     : "bg-[#2E3148] text-white"
                 }
@@ -146,26 +145,13 @@ const prevProducts = () => {
                     <img
                       src={images[currentIndex]}
                       alt={item.title}
-                      className="w-full h-[260px] sm:h-[300px] lg:h-[320px] object-cover"
+                      className="w-full h-[320px] object-cover"
                     />
 
                     {/* Discount */}
-                   <span
-              className="
-                     absolute top-0 left-0
-                    min-w-[80px]
-                         px-3
-    h-[32px]
-    bg-[#D94A43]
-    text-white
-    text-[12px]
-    font-semibold
-    flex items-center justify-center
-    rounded-br-md
-  "
->
-  {item.discount}
-</span>
+                    <span className="absolute top-0 left-0 bg-[#D94A43] text-white text-[12px] font-semibold px-3 py-1.5 rounded-br-md">
+                      {item.discount}
+                    </span>
 
                     {/* Prev Image */}
                     <button
@@ -224,11 +210,11 @@ const prevProducts = () => {
                   {/* Content */}
                   <div className="pt-4">
 
-                    <h3 className="text-[18px] font-semibold text-[#1F2340] leading-7 line-clamp-3 min-h-[78px] whitespace-pre-line">
+                    <h3 className="text-[18px] font-semibold text-[#1F2340] leading-7 line-clamp-3 min-h-[90px]">
                       {item.title}
                     </h3>
 
-                    <div className="flex items-center gap-2 ">
+                    <div className="flex items-center gap-2 mt-2">
                       <div className="flex text-[#D94A43]">
                         {[...Array(item.rating)].map(
                           (_, index) => (
@@ -242,7 +228,7 @@ const prevProducts = () => {
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-3 mt-2">
+                    <div className="flex items-center gap-3 mt-3">
                       <span className="text-[19px] font-bold text-[#1F2340]">
                         ₹{item.price}
                       </span>
@@ -266,7 +252,7 @@ const prevProducts = () => {
             style={{
               width: `${
                 ((startIndex + ITEMS_PER_VIEW) /
-                  products.length) *
+                  combo.length) *
                 100
               }%`,
             }}
@@ -278,4 +264,4 @@ const prevProducts = () => {
   );
 };
 
-export default ProductCarousel;
+export default SaveCombos;

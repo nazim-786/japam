@@ -3,13 +3,15 @@ import AnnouncementBar from "./components/AnnouncementBar";
 import Navbar from "./components/Navbar";
 import CategoryStrip from "./components/CategoryStrip";
 import HeroSection from "./components/HeroSection";
-import ProductSection from "./components/ProductSection";
+import ProductCarousel from "./components/ProductCarousel";
 import LabTestedSection from "./components/LabTestedSection";
 import CollectionCarousel from "./components/CollectionCarousel";
 import LatestTrending from "./components/LatestTrending";
 import PurposeSection from "./components/PurposeSection";
 import ExploreEnergyStones from "./components/ExploreEnergyStones";
 import LifestyleGallery from "./components/LifestyleGallery";
+import SaveCombos from "./components/SaveCombos";
+import SiddhDeliverySection from "./components/SiddhDeliverySection";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
@@ -19,13 +21,15 @@ function App() {
       <Navbar />
       <CategoryStrip />
       <HeroSection />
-      <ProductSection />
+      <ProductCarousel />
       <LabTestedSection />
       <CollectionCarousel />
       <LatestTrending />
       <PurposeSection />
      <ExploreEnergyStones />
      <LifestyleGallery />
+     <SaveCombos />
+      <SiddhDeliverySection />
     </CartProvider>
   );
 }

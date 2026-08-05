@@ -6,10 +6,16 @@ export const products = [
     reviews: 222,
     price: 599,
     originalPrice: 999,
-    image:
-      "https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=500",
     discount: "40% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 2,
     name: "Money Magnet Tie-Up Band with Tiger Eye",
@@ -17,10 +23,16 @@ export const products = [
     reviews: 56,
     price: 899,
     originalPrice: 1499,
-    image:
-      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=500",
     discount: "40% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 3,
     name: "Gold Plated Rudraksha Bracelet",
@@ -28,10 +40,16 @@ export const products = [
     reviews: 113,
     price: 899,
     originalPrice: 1499,
-    image:
-      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=500",
     discount: "40% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 4,
     name: "Silver Plated Bracelet",
@@ -39,10 +57,16 @@ export const products = [
     reviews: 48,
     price: 799,
     originalPrice: 1299,
-    image:
-      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500",
     discount: "38% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 5,
     name: "24K Gold Plated Hanuman Necklace",
@@ -50,12 +74,15 @@ export const products = [
     reviews: 69,
     price: 499,
     originalPrice: 1699,
-    image:
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500",
     discount: "71% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
-
-  // NEW PRODUCTS
 
   {
     id: 6,
@@ -64,10 +91,16 @@ export const products = [
     reviews: 81,
     price: 999,
     originalPrice: 1599,
-    image:
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500",
     discount: "38% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 7,
     name: "Karungali Elemental Bracelet",
@@ -75,10 +108,16 @@ export const products = [
     reviews: 9,
     price: 699,
     originalPrice: 1299,
-    image:
-      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500",
     discount: "46% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 8,
     name: "Pyrite Prosperity Bracelet",
@@ -86,10 +125,16 @@ export const products = [
     reviews: 37,
     price: 749,
     originalPrice: 1399,
-    image:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=500",
     discount: "47% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 9,
     name: "Tiger Eye Protection Bracelet",
@@ -97,10 +142,16 @@ export const products = [
     reviews: 92,
     price: 849,
     originalPrice: 1499,
-    image:
-      "https://images.unsplash.com/photo-1506629905607-d9d8e2f4d3e4?w=500",
     discount: "43% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1506629905607-d9d8e2f4d3e4?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+    ],
   },
+
   {
     id: 10,
     name: "Natural Rudraksha Kada",
@@ -108,8 +159,13 @@ export const products = [
     reviews: 64,
     price: 1099,
     originalPrice: 1899,
-    image:
-      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500",
     discount: "42% OFF",
+    images: [
+      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800",
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+      "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800",
+      "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800",
+    ],
   },
 ];
