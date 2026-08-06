@@ -32,7 +32,7 @@ export default function LabTestedSection() {
     <section className="bg-[#f7efe4] pt-8 pb-16">
 
       {/* Full Box */}
-      <div className="max-w-[1280px] mx-auto bg-[#f6e8d3]">
+      <div className="max-w-7xl mx-auto bg-[#f6e8d3]">
 
         {/* Heading Area */}
         <div className="px-10 py-10">
@@ -54,7 +54,7 @@ export default function LabTestedSection() {
           <img
             src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1600"
             alt=""
-            className="w-full h-[720px] object-cover"
+            className="w-full h-180 object-cover"
           />
 
           {hotspots.map((item) => (

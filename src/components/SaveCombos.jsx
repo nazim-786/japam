@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import combo from "../data/combo";
 import {
   FaStar,
@@ -55,7 +55,7 @@ const prevProducts = () => {
 
   return (  
     <section className="bg-[#fff3df] pt-4 pb-9">
-      <div className="max-w-[1400px] mx-auto px-7">
+      <div className="max-w-350 mx-auto px-7">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
@@ -68,7 +68,7 @@ const prevProducts = () => {
                      text-[17px]
                      text-[#1F2340]
                           border-b border-[#1F2340]
-                                  pb-[2px]
+                                  pb-0.5
                                 hover:opacity-80
                                  transition-all duration-300 "
 >
@@ -79,7 +79,7 @@ const prevProducts = () => {
         <div className="relative">
 
           {/* Section Slider Arrows */}
-          <div className="absolute right-[-24px] top-[170px] z-50 flex flex-col gap-3">
+          <div className="absolute -right-6 top-42.5 z-50 flex flex-col gap-3">
 
             <button
               onClick={nextProducts}
@@ -145,7 +145,7 @@ const prevProducts = () => {
                     <img
                       src={images[currentIndex]}
                       alt={item.title}
-                      className="w-full h-[320px] object-cover"
+                      className="w-full h-80 object-cover"
                     />
 
                     {/* Discount */}
@@ -210,7 +210,7 @@ const prevProducts = () => {
                   {/* Content */}
                   <div className="pt-4">
 
-                    <h3 className="text-[18px] font-semibold text-[#1F2340] leading-7 line-clamp-3 min-h-[90px]">
+                    <h3 className="text-[18px] font-semibold text-[#1F2340] leading-7 line-clamp-3 min-h-22.5">
                       {item.title}
                     </h3>
 
@@ -246,7 +246,7 @@ const prevProducts = () => {
         </div>
 
         {/* Progress Line */}
-        <div className="mt-8 h-[2px] bg-[#1F2340]/15 relative">
+        <div className="mt-8 h-0.5 bg-[#1F2340]/15 relative">
           <div
             className="absolute top-0 left-0 h-full bg-[#1F2340]"
             style={{

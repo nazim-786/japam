@@ -1,5 +1,3 @@
-import React from "react";
-
 const categories = [
   { image: "https://japam.in/cdn/shop/files/1_1b42a50a-4022-4bf9-affc-605f7fea341c.png?v=1774088462&width=70" },
   { image: "https://japam.in/cdn/shop/files/2_03327e1d-ba6b-43bb-a211-379aba6ff76b.png?v=1774088462&width=70" },

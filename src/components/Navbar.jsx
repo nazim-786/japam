@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { CartContext } from "../context/CartContext";
+import { useContext, useState } from "react";
+import { CartContext } from "../context/cart-context";
 
 const navLinks = [
     {

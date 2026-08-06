@@ -1,7 +1,5 @@
-import React, { createContext, useState } from "react";
-
-// Cart ka data pure app me share karne ke liye Context bana rahe hai
-export const CartContext = createContext();
+import { useState } from "react";
+import { CartContext } from "./cart-context";
 
 export function CartProvider({ children }) {
   // cartItems ek array hai jisme add kiye hue products store honge

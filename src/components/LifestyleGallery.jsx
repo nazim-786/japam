@@ -1,5 +1,3 @@
-import React from "react";
-
 const LifestyleGallery = () => {
   return (
     <section className="bg-[#f8e8d1] pt-5 pb-5 md:pb-7">

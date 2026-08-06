@@ -1,5 +1,3 @@
-import React from "react";
-
 const SiddhDeliverySection = () => {
   return (
     <section className="bg-[#fae6c4] py-4 md:py-6">
@@ -48,10 +46,10 @@ const SiddhDeliverySection = () => {
             <video
               className="
                 w-full
-                h-[220px]
-                sm:h-[350px]
-                md:h-[500px]
-                lg:h-[620px]
+                h-55
+                sm:h-87.5
+                md:h-125
+                lg:h-155
                 object-cover
               "
               autoPlay
