@@ -22,45 +22,42 @@ const purposes = [
 
 export default function ShopByPurpose() {
   return (
-    <section className="w-full bg-[#e9dcc7] py-12">
-      
-      {/* Heading Separate */}
-      <div className="max-w-[1180px] mx-auto">
-        <h2 className="text-center text-[48px] font-bold text-[#1f2340] relative -top-8">
-          Shop By Purpose
-        </h2>
-      </div>
+    <section className="bg-[#ffeed1] py-14">
+  {/* Heading */}
+  <div className="max-w-[1190px] mx-auto">
+    <h2 className="text-center text-[55px] font-bold text-[#1f2340] relative -top-5">
+      Shop By Purpose
+    </h2>
+  </div>
 
-      {/* Cards Separate */}
-      <div className="max-w-[1180px] mx-auto -mt-4">
-        <div className="flex justify-between items-center gap-5">
-          {purposes.map((item, index) => {
-            const Icon = item.icon;
+  {/* Cards */}
+  <div className="max-w-[1190px] mx-auto px-4">
+    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-8">
+      {purposes.map((item, index) => {
+        const Icon = item.icon;
 
-            return (
-              <div
-                key={index}
-                className="w-[110px] cursor-pointer shrink-0"
-              >
-                <div className="h-[110px] bg-gradient-to-b from-[#c73f4d] to-[#4a2d4d] flex items-center justify-center">
-                  <Icon className="text-white text-[58px]" />
-                </div>
+        return (
+          <div key={index} className="cursor-pointer">
+            {/* Image Area */}
+            <div className="h-[82px] bg-gradient-to-b from-[#C7444E] to-[#4A2D4D] flex items-center justify-center">
+              <Icon className="text-white text-[42px]" />
+            </div>
 
-                <div className="h-[26px] bg-[#25243c] px-2 flex items-center justify-between">
-                  <span className="text-white text-[12px] font-semibold">
-                    {item.title}
-                  </span>
+            {/* Bottom Bar */}
+            <div className="h-[24px] bg-[#25243C] px-2 flex items-center justify-between">
+              <span className="text-white text-[13px] font-semibold">
+                {item.title}
+              </span>
 
-                  <div className="w-4 h-4 border border-white rounded-full flex items-center justify-center">
-                    <FaArrowRight className="text-white text-[8px]" />
-                  </div>
-                </div>
+              <div className="w-3.5 h-3.5 border border-white rounded-full flex items-center justify-center">
+                <FaArrowRight className="text-white text-[8px]" />
               </div>
-            );
-          })}
-        </div>
-      </div>
-
-    </section>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
   );
 }

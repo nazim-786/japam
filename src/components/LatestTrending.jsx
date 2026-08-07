@@ -87,14 +87,15 @@ const ProductCard = ({ product }) => {
           src={product.images[imageIndex]}
           alt={product.title}
           className="
-            w-full
-            h-[420px]
-            object-cover
-            rounded-lg
-            transition-all
-            duration-500
-            group-hover:scale-[1.02]
-          "
+          
+  w-full
+  aspect-square
+  object-cover
+  rounded-lg
+  transition-all
+  duration-500
+  group-hover:scale-[1.02]
+"
         />
       </div>
 
@@ -102,7 +103,7 @@ const ProductCard = ({ product }) => {
       <h3
         className="
           mt-3
-          text-[15px]
+          text-[17px]
           font-semibold
           text-[#16233d]
         "
@@ -132,34 +133,36 @@ const ProductCard = ({ product }) => {
 
 const LatestTrending = () => {
   return (
-    <section className="bg-[#f4efe6] pt-4 pb-10">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-[#fff3df] pt-0 pb-10">
+      <div className="max-w-[1340px] mx-auto px-4">
 
         {/* Heading */}
-        <h2
-          className="
-            text-[28px]
-            font-bold
-            text-[#16233d]
-            mb-8
-          "
-        >
-          Latest & Trending
-        </h2>
+       <h2
+    className="
+      text-[28px]
+      font-bold
+      text-[#16233d]
+          pb-[20px]
+
+    "
+  >
+    Latest & Trending
+  </h2>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-3 gap-7">
-          {[
-            ...trendingProducts,
-            ...trendingProducts,
-            ...trendingProducts,
-          ].map((product, index) => (
-            <ProductCard
-              key={index}
-              product={product}
-            />
-          ))}
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  {[
+    ...trendingProducts,
+    ...trendingProducts,
+    ...trendingProducts,
+  ].map((product, index) => (
+    <ProductCard
+      key={index}
+      product={product}
+    />
+  ))}
+</div>
+       
 
       </div>
     </section>

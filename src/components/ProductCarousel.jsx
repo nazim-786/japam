@@ -54,7 +54,7 @@ const prevProducts = () => {
   };
 
   return (  
-    <section className="bg-[#fff3df] pt-6 pb-14">
+    <section className="bg-[#fff3df] pt-6 pb-10">
       <div className="max-w-[1400px] mx-auto px-7">
 
         {/* Header */}

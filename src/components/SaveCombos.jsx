@@ -54,18 +54,18 @@ const prevProducts = () => {
   };
 
   return (  
-    <section className="bg-[#fff3df] pt-4 pb-9">
-      <div className="max-w-350 mx-auto px-7">
+    <section className="bg-[#fff3df] py-8">
+      <div className="max-w-[1390px] mx-auto px-6">
 
         {/* Header */}
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-[42px] font-bold text-[#1F2340] leading-[1.2]">
+        <div className="flex justify-between items-center mb-5">
+          <h2 className="text-[45px] font-bold text-[#1F2340] leading-[1.2]">
             Save More With Combos
           </h2>
 
           <button
               className="
-                     text-[17px]
+                     text-[18px]
                      text-[#1F2340]
                           border-b border-[#1F2340]
                                   pb-0.5
@@ -76,10 +76,10 @@ const prevProducts = () => {
         </button>
         </div>
 
-        <div className="relative">
+        <div className="relative group">
 
           {/* Section Slider Arrows */}
-          <div className="absolute -right-6 top-42.5 z-50 flex flex-col gap-3">
+          <div className="hidden lg:flex absolute right-[-45px] top-[185px] z-40 flex-col gap-3">
 
             <button
               onClick={nextProducts}
@@ -90,6 +90,8 @@ const prevProducts = () => {
                 w-12 h-12 rounded-full
                 flex items-center justify-center
                 shadow-md
+                            transition-all duration-300
+    opacity-0 group-hover:opacity-100
                 ${
                   startIndex + ITEMS_PER_VIEW >= combo.length
                     ? "bg-gray-300 text-white cursor-not-allowed"
@@ -107,6 +109,8 @@ const prevProducts = () => {
                 w-12 h-12 rounded-full
                 flex items-center justify-center
                 shadow-md
+                            transition-all duration-300
+    opacity-0 group-hover:opacity-100
                 ${
                   startIndex === 0
                     ? "bg-gray-300 text-white cursor-not-allowed"
@@ -149,7 +153,7 @@ const prevProducts = () => {
                     />
 
                     {/* Discount */}
-                    <span className="absolute top-0 left-0 bg-[#D94A43] text-white text-[12px] font-semibold px-3 py-1.5 rounded-br-md">
+                    <span className="absolute top-0 left-0 bg-[#D94A43] text-white text-[14px] font-semibold px-3 py-1.5 rounded-br-md">
                       {item.discount}
                     </span>
 
@@ -223,13 +227,13 @@ const prevProducts = () => {
                         )}
                       </div>
 
-                      <span className="text-[13px] text-gray-500">
+                      <span className="text-[12px] text-gray-500">
                         ({item.reviews})
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-3 mt-3">
-                      <span className="text-[19px] font-bold text-[#1F2340]">
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className="text-[18px] font-bold text-[#1F2340]">
                         ₹{item.price}
                       </span>
 

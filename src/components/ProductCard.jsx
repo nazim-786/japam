@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
 
         {/* Discount Badge */}
         <div className="absolute top-0 left-0 bg-[#d64045] text-white text-sm font-semibold px-3 py-1 z-20">
-          {product.discount} Off
+          {product.discount}
         </div>
 
         <img
@@ -73,12 +73,12 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Product Title */}
-      <h3 className="mt-4 text-[18px] font-semibold text-[#1f2940] leading-8">
+      <h3 className="mt-4 text-[17px] font-semibold text-[#1f2940] leading-6">
         {product.title}
       </h3>
 
       {/* Rating */}
-      <div className="flex items-center gap-1 mt-2">
+      <div className="flex items-center gap-1 mt-1">
         {[...Array(5)].map((_, i) => (
           <FaStar
             key={i}
@@ -86,14 +86,14 @@ export default function ProductCard({ product }) {
           />
         ))}
 
-        <span className="text-[16px] text-[#4b5563] ml-1">
+        <span className="text-[14px] text-[#4b5563] ml-1">
           ({product.reviews})
         </span>
       </div>
 
       {/* Price */}
       <div className="mt-2 flex items-center gap-3">
-        <span className="font-bold text-[18px] md:text-[20px] text-[#1f2940]">
+        <span className="font-bold text-[17px] md:text-[20px] text-[#1f2940]">
           ₹{product.price}
         </span>
 
