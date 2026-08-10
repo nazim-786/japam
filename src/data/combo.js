@@ -148,6 +148,34 @@ const combo = [
     price: 1099,
     oldPrice: 1999,
   },
+    {
+    id: 11,
+    images: [
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600",
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600",
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600",
+    ],
+    discount: "42% OFF",
+    title: "Rose Quartz Healing Combo | Attract Love, Peace & Harmony",
+    rating: 5,
+    reviews: 52,
+    price: 749,
+    oldPrice: 1299,
+  },
+  {
+      id: 12,
+    images: [
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600",
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600",
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
+    ],
+    discount: "44% OFF",
+    title: "Cubio Rudraksha Bracelet Combo | Spiritual Wellness & Mindful Living",
+    rating: 5,
+    reviews: 7,
+    price: 899,
+    oldPrice: 1599,
+  },
 ];
 
 export default combo;

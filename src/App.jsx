@@ -13,7 +13,8 @@ import LifestyleGallery from "./components/LifestyleGallery";
 import SaveCombos from "./components/SaveCombos";
 import SiddhDeliverySection from "./components/SiddhDeliverySection";
 import RudrakshaBeads from "./components/RudrakshaBeads";
-
+import SpiritualJewellery from "./components/SpiritualJewellery";
+import SpiritualHamper from "./components/SpiritualHamper";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
      <SaveCombos />
       <SiddhDeliverySection />
       <RudrakshaBeads />
+      <SpiritualJewellery />
+      <SpiritualHamper />
 
     </CartProvider>
   );
