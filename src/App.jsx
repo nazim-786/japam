@@ -13,8 +13,11 @@ import LifestyleGallery from "./components/LifestyleGallery";
 import SaveCombos from "./components/SaveCombos";
 import SiddhDeliverySection from "./components/SiddhDeliverySection";
 import RudrakshaBeads from "./components/RudrakshaBeads";
-import SpiritualJewellery from "./components/SpiritualJewellery";
 import SpiritualHamper from "./components/SpiritualHamper";
+import ChooseYourStyle from "./components/ChooseYourStyle"; 
+import SpiritualJewellery from "./components/SpiritualJewellery";
+import CustomerFeedback from "./components/CustomerFeedback";
+import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
@@ -36,6 +39,9 @@ function App() {
       <RudrakshaBeads />
       <SpiritualJewellery />
       <SpiritualHamper />
+      <ChooseYourStyle />
+      <CustomerFeedback />
+      <Footer />
 
     </CartProvider>
   );
