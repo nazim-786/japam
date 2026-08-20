@@ -152,11 +152,44 @@ code {
   font-weight: 600;
   overflow: hidden;
   white-space: nowrap;
+  width: 100%;
+  max-width: 100%;
 }
 
 .announcement-text {
   display: inline-block;
   animation: slideIn 0.8s ease-out;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .announcement-bar {
+    padding-left: 24px;
+  }
+}
+
+@media (max-width: 414px) {
+  .announcement-bar {
+    padding-left: 14px;
+  }
+}
+
+@media (max-width: 390px) {
+  .announcement-bar {
+    padding-left: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .announcement-bar {
+    padding-left: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .announcement-bar {
+    padding: 8px 8px;
+  }
 }
 
 @keyframes slideIn {
