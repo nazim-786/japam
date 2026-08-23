@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { products } from "../data/products";
 import {
@@ -11,6 +10,8 @@ const ProductCarousel = () => {
   const [imageIndexes, setImageIndexes] = useState({});
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(4);
+
+  // Mobile swipe states
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
@@ -19,7 +20,9 @@ const ProductCarousel = () => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
         // Mobile
-        setItemsPerView(1);
+        // 2 products render honge,
+        // lekin CSS se first card large aur second card ka preview dikhega
+        setItemsPerView(2);
       } else if (window.innerWidth < 1024) {
         // Tablet / iPad
         setItemsPerView(2);
@@ -38,59 +41,77 @@ const ProductCarousel = () => {
     };
   }, []);
 
+  // Screen size change hone par carousel ko beginning par le aao
+  useEffect(() => {
+    setStartIndex(0);
+  }, [itemsPerView]);
+
+  // Visible products
   const visibleProducts = products.slice(
     startIndex,
     startIndex + itemsPerView
   );
 
+  // Next product
   const nextProducts = () => {
     if (startIndex < products.length - itemsPerView) {
       setStartIndex((prev) => prev + 1);
     }
   };
 
+  // Previous product
   const prevProducts = () => {
     if (startIndex > 0) {
       setStartIndex((prev) => prev - 1);
     }
   };
 
-  // Mobile swipe start
+  // =========================
+  // MOBILE SWIPE
+  // =========================
+
   const handleTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
   };
 
-  // Mobile swipe end
-  const handleTouchEnd = (e) => {
-    setTouchEnd(e.changedTouches[0].clientX);
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
   };
 
-  // Detect swipe direction
-  useEffect(() => {
-    if (!touchStart || !touchEnd) return;
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) {
+      return;
+    }
 
     const distance = touchStart - touchEnd;
 
     // Minimum swipe distance
     const minSwipeDistance = 50;
 
+    // Small movement ko swipe nahi maanenge
     if (Math.abs(distance) < minSwipeDistance) {
+      setTouchStart(0);
+      setTouchEnd(0);
       return;
     }
 
-    // Swipe left = next product
+    // Swipe LEFT
     if (distance > 0) {
       nextProducts();
     }
 
-    // Swipe right = previous product
+    // Swipe RIGHT
     if (distance < 0) {
       prevProducts();
     }
 
     setTouchStart(0);
     setTouchEnd(0);
-  }, [touchEnd]);
+  };
+
+  // =========================
+  // PRODUCT IMAGE NEXT
+  // =========================
 
   const nextImage = (id, totalImages, e) => {
     e.stopPropagation();
@@ -104,6 +125,10 @@ const ProductCarousel = () => {
     }));
   };
 
+  // =========================
+  // PRODUCT IMAGE PREVIOUS
+  // =========================
+
   const prevImage = (id, totalImages, e) => {
     e.stopPropagation();
 
@@ -116,12 +141,33 @@ const ProductCarousel = () => {
     }));
   };
 
+  // =========================
+  // ARROW STATUS
+  // =========================
+
+  const isFirstProduct = startIndex === 0;
+
+  const isLastProduct =
+    startIndex + itemsPerView >= products.length;
+
+  // =========================
+  // PROGRESS
+  // =========================
+
+  const progressWidth =
+    products.length > 0
+      ? ((startIndex + itemsPerView) / products.length) * 100
+      : 0;
+
   return (
     <section className="bg-[#fff3df] pt-6 pb-10">
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-7">
 
-        {/* Header */}
+        {/* =========================
+            HEADER
+        ========================= */}
+
         <div className="flex justify-between items-center mb-4">
 
           <h2 className="text-[28px] sm:text-[34px] lg:text-[42px] font-bold">
@@ -146,51 +192,84 @@ const ProductCarousel = () => {
 
         </div>
 
+        {/* =========================
+            PRODUCT CAROUSEL
+        ========================= */}
+
         <div className="relative">
 
-          {/* Section Slider Arrows
-              Desktop + Tablet only
-              Hidden on Mobile
-          */}
+          {/* =========================
+              DESKTOP / TABLET SECTION ARROWS
+              HIDDEN ON MOBILE
+          ========================= */}
 
-          <div className="hidden sm:flex absolute right-[-12px] lg:right-[-24px] top-[150px] lg:top-[170px] z-50 flex-col gap-3">
+          <div
+            className="
+              hidden
+              sm:flex
+              absolute
+              right-[-12px]
+              lg:right-[-24px]
+              top-[150px]
+              lg:top-[170px]
+              z-50
+              flex-col
+              gap-3
+            "
+          >
 
-            {/* Next Product */}
+            {/* NEXT PRODUCT */}
+
             <button
               onClick={nextProducts}
-              disabled={
-                startIndex + itemsPerView >= products.length
-              }
+              disabled={isLastProduct}
+              aria-label="Next products"
               className={`
-                w-11 h-11 lg:w-12 lg:h-12
+                w-11
+                h-11
+                lg:w-12
+                lg:h-12
                 rounded-full
-                flex items-center justify-center
+                flex
+                items-center
+                justify-center
                 shadow-md
+                transition-all
+                duration-300
 
                 ${
-                  startIndex + itemsPerView >= products.length
+                  isLastProduct
                     ? "bg-gray-300 text-white cursor-not-allowed"
-                    : "bg-[#2E3148] text-white"
+                    : "bg-[#2E3148] text-white hover:scale-105"
                 }
               `}
             >
               <FaChevronRight />
             </button>
 
-            {/* Previous Product */}
+            {/* PREVIOUS PRODUCT */}
+
             <button
               onClick={prevProducts}
-              disabled={startIndex === 0}
+              disabled={isFirstProduct}
+              aria-label="Previous products"
               className={`
-                w-11 h-11 lg:w-12 lg:h-12
+                w-11
+                h-11
+                lg:w-12
+                lg:h-12
                 rounded-full
-                flex items-center justify-center
+                flex
+                items-center
+                justify-center
                 shadow-md
+                transition-all
+                duration-300
 
                 ${
-                  startIndex === 0
+                  isFirstProduct
                     ? "bg-gray-300 text-white cursor-not-allowed"
-                    : "bg-[#2E3148] text-white"
+                    : "bg-[#2E3148] text-white hover:scale-105"
                 }
               `}
             >
@@ -199,21 +278,27 @@ const ProductCarousel = () => {
 
           </div>
 
-
-          {/* Products */}
+          {/* =========================
+              PRODUCTS
+          ========================= */}
 
           <div
             className="
-              grid
-              grid-cols-1
+              flex
+              sm:grid
               sm:grid-cols-2
               lg:grid-cols-4
-              gap-5
+
+              gap-3
+              sm:gap-5
+
+              overflow-hidden
 
               touch-pan-y
               select-none
             "
             onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
 
@@ -231,14 +316,32 @@ const ProductCarousel = () => {
                 currentIndex === images.length - 1;
 
               return (
+
                 <div
                   key={item.id}
-                  className="group cursor-pointer min-w-0"
+                  className="
+                    group
+                    cursor-pointer
+                    flex-shrink-0
+
+                    w-[calc(100vw-120px)]
+
+                    sm:w-auto
+                    sm:flex-shrink
+                  "
                 >
 
-                  {/* Image */}
+                  {/* =========================
+                      IMAGE
+                  ========================= */}
 
-                  <div className="relative overflow-hidden rounded-[10px]">
+                  <div
+                    className="
+                      relative
+                      overflow-hidden
+                      rounded-[10px]
+                    "
+                  >
 
                     <img
                       src={images[currentIndex]}
@@ -253,8 +356,9 @@ const ProductCarousel = () => {
                       "
                     />
 
-
-                    {/* Discount */}
+                    {/* =========================
+                        DISCOUNT
+                    ========================= */}
 
                     <span
                       className="
@@ -268,6 +372,7 @@ const ProductCarousel = () => {
 
                         bg-[#D94A43]
                         text-white
+
                         text-[12px]
                         font-semibold
 
@@ -282,9 +387,11 @@ const ProductCarousel = () => {
                     </span>
 
 
-                    {/* Previous Image
-                        Hidden on Mobile
-                    */}
+                    {/* =========================
+                        PREVIOUS IMAGE
+
+                        MOBILE HIDDEN
+                    ========================= */}
 
                     <button
                       onClick={(e) =>
@@ -295,8 +402,10 @@ const ProductCarousel = () => {
                         )
                       }
                       disabled={isFirstImage}
+                      aria-label="Previous image"
                       className={`
-                        hidden sm:flex
+                        hidden
+                        sm:flex
 
                         absolute
                         left-4
@@ -305,6 +414,7 @@ const ProductCarousel = () => {
 
                         w-10
                         h-10
+
                         rounded-full
 
                         items-center
@@ -327,9 +437,11 @@ const ProductCarousel = () => {
                     </button>
 
 
-                    {/* Next Image
-                        Hidden on Mobile
-                    */}
+                    {/* =========================
+                        NEXT IMAGE
+
+                        MOBILE HIDDEN
+                    ========================= */}
 
                     <button
                       onClick={(e) =>
@@ -340,8 +452,10 @@ const ProductCarousel = () => {
                         )
                       }
                       disabled={isLastImage}
+                      aria-label="Next image"
                       className={`
-                        hidden sm:flex
+                        hidden
+                        sm:flex
 
                         absolute
                         right-4
@@ -350,6 +464,7 @@ const ProductCarousel = () => {
 
                         w-10
                         h-10
+
                         rounded-full
 
                         items-center
@@ -374,9 +489,13 @@ const ProductCarousel = () => {
                   </div>
 
 
-                  {/* Content */}
+                  {/* =========================
+                      PRODUCT CONTENT
+                  ========================= */}
 
                   <div className="pt-4">
+
+                    {/* TITLE */}
 
                     <h3
                       className="
@@ -393,7 +512,9 @@ const ProductCarousel = () => {
                     </h3>
 
 
-                    {/* Rating */}
+                    {/* =========================
+                        RATING
+                    ========================= */}
 
                     <div className="flex items-center gap-2">
 
@@ -414,15 +535,29 @@ const ProductCarousel = () => {
                     </div>
 
 
-                    {/* Price */}
+                    {/* =========================
+                        PRICE
+                    ========================= */}
 
                     <div className="flex items-center gap-3 mt-2">
 
-                      <span className="text-[19px] font-bold text-[#1F2340]">
+                      <span
+                        className="
+                          text-[19px]
+                          font-bold
+                          text-[#1F2340]
+                        "
+                      >
                         ₹{item.price}
                       </span>
 
-                      <span className="text-[16px] text-gray-400 line-through">
+                      <span
+                        className="
+                          text-[16px]
+                          text-gray-400
+                          line-through
+                        "
+                      >
                         ₹{item.oldPrice}
                       </span>
 
@@ -439,9 +574,18 @@ const ProductCarousel = () => {
         </div>
 
 
-        {/* Progress Line */}
+        {/* =========================
+            PROGRESS LINE
+        ========================= */}
 
-        <div className="mt-8 h-[2px] bg-[#1F2340]/15 relative">
+        <div
+          className="
+            mt-8
+            h-[2px]
+            bg-[#1F2340]/15
+            relative
+          "
+        >
 
           <div
             className="
@@ -454,11 +598,7 @@ const ProductCarousel = () => {
               duration-300
             "
             style={{
-              width: `${
-                ((startIndex + itemsPerView) /
-                  products.length) *
-                100
-              }%`,
+              width: `${Math.min(progressWidth, 100)}%`,
             }}
           />
 
