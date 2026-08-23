@@ -10,6 +10,11 @@ import {
 
 const socialLinks = [
   {
+    label: "Facebook",
+    href: "https://www.facebook.com/japamofficial",
+    Icon: FaFacebookF,
+  },
+  {
     label: "Instagram",
     href: "https://instagram.com/japam.in",
     Icon: FaInstagram,
@@ -23,11 +28,6 @@ const socialLinks = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/98860235/",
     Icon: FaLinkedinIn,
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/japamofficial",
-    Icon: FaFacebookF,
   },
 ];
 
@@ -49,31 +49,39 @@ const policyLinks = [
   { label: "Cancellation Policy", href: "#" },
 ];
 
-// Mobile Accordion Section Component
 const AccordionSection = ({ title, isOpen, onToggle, children }) => {
   return (
-    <div className="border-b border-[#c7bca8]">
+    <div className="border-b border-[#cfc2ae]">
       <button
+        type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between py-4 px-0 text-[0.95rem] font-bold text-[#1d1b22] hover:text-[#121521] transition-colors duration-300"
+        className="flex w-full items-center justify-between py-4 text-[15px] font-bold text-[#1d1b22]"
       >
-        {title}
+        <span>{title}</span>
+
         <FaChevronDown
-          className={`h-4 w-4 text-[#1d1b22] transition-transform duration-300 ${
+          className={`h-4 w-4 transition-transform duration-300 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
-      {isOpen && (
-        <div className="pb-4 overflow-hidden animation-all duration-300">
-          {children}
-        </div>
-      )}
+
+      <div
+        className={`grid transition-all duration-300 ${
+          isOpen
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">{children}</div>
+      </div>
     </div>
   );
 };
 
-function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-footer-logo_2.png?v=1758175789&width=150" }) {
+function Footer({
+  logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-footer-logo_2.png?v=1758175789&width=150",
+}) {
   const [openAccordions, setOpenAccordions] = useState({
     quickLinks: false,
     policies: false,
@@ -88,54 +96,140 @@ function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-foote
   };
 
   return (
-    <footer className="w-full bg-[#ffeed1] text-[#1a1820]">
-      <div className="mx-auto max-w-[1480px] px-5 sm:px-8 lg:px-12 xl:px-16">
-        {/* Desktop Layout - Hidden on Mobile */}
-        <div className="hidden md:flex flex-col gap-8 pt-14 pb-10 md:items-start md:justify-between xl:gap-10">
-          <div className="w-full md:max-w-[310px] lg:max-w-[360px]">
-            <div className="mb-5">
-              <img
-                src={logoUrl}
-                alt="Japam logo"
-                className="h-auto w-[150px] max-w-full object-contain sm:w-[160px]"
-              />
+    <footer className="w-full bg-[#ffeed1] text-[#1d1b22]">
+      <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16">
+
+        {/* ================= DESKTOP / TABLET ================= */}
+        <div className="hidden md:block">
+
+          <div
+            className="
+              grid
+              grid-cols-2
+              gap-x-12
+              gap-y-12
+              pt-14
+              pb-14
+              lg:grid-cols-[1.35fr_0.85fr_0.85fr_1.15fr]
+              lg:gap-x-10
+              xl:gap-x-16
+              xl:pt-[68px]
+              xl:pb-[68px]
+            "
+          >
+
+            {/* ================= BRAND ================= */}
+            <div className="w-full">
+              <div className="mb-6">
+                <img
+                  src={logoUrl}
+                  alt="Japam logo"
+                  className="
+                    h-auto
+                    w-[140px]
+                    object-contain
+                    sm:w-[150px]
+                    lg:w-[150px]
+                  "
+                />
+              </div>
+
+              <h3
+                className="
+                  text-[15px]
+                  font-bold
+                  leading-[1.3]
+                  text-[#1d1b22]
+                  lg:text-[15px]
+                  xl:text-[16px]
+                "
+              >
+                Authentic Spiritual Accessories
+              </h3>
+
+              <p
+                className="
+                  mt-4
+                  max-w-[390px]
+                  text-[14px]
+                  font-medium
+                  leading-[1.65]
+                  text-[#1d1b22]
+                  sm:text-[14px]
+                  lg:text-[15px]
+                "
+              >
+                Bringing stories of Indian tradition alive through our unique
+                range of wearables, decor, and puja accessories.
+              </p>
+
+              {/* SOCIAL ICONS */}
+              <div className="mt-6 flex items-center gap-4">
+                {socialLinks.map(({ label, href, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="
+                      flex
+                      h-8
+                      w-8
+                      items-center
+                      justify-center
+                      text-[#292633]
+                      transition-all
+                      duration-300
+                      hover:scale-110
+                    "
+                  >
+                    <Icon className="h-[21px] w-[21px]" />
+                  </a>
+                ))}
+              </div>
             </div>
 
-            <h3 className="text-[1.1rem] font-bold leading-tight text-[#1d1b22] sm:text-[1.1rem]">
-              Authentic Spiritual Accessories
-            </h3>
-
-            <p className="mt-3 max-w-[390px] text-[0.85rem] leading-6 font-medium text-[#1d1b22]/80">
-              Bringing stories of Indian tradition alive through our unique range of wearables, decor, and puja accessories.
-            </p>
-
-            <div className="mt-5 flex items-center gap-3">
-              {socialLinks.map(({ label, href, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#1f2430] text-[#1f2430] transition-all duration-300 hover:scale-110"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid w-full gap-4 md:grid-cols-2 md:gap-10 lg:max-w-[520px]">
+            {/* ================= QUICK LINKS ================= */}
             <div>
-              <h4 className="text-[0.70rem] font-bold text-[#1d1b22] sm:text-[0.95rem]">
+              <h4
+                className="
+                  text-[15px]
+                  font-bold
+                  text-[#1d1b22]
+                  xl:text-[16px]
+                "
+              >
                 Quick Links
               </h4>
-              <ul className="mt-5 space-y-3 text-[0.96rem] text-[#1d1b22]">
+
+              <ul className="mt-5 space-y-[17px]">
                 {quickLinks.map(({ label, href }) => (
                   <li key={label}>
                     <a
                       href={href}
-                      className="relative inline-block cursor-pointer transition-all duration-300 hover:text-[#121521] after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-[#121521] after:transition-transform after:duration-300 hover:after:scale-x-100"
+                      className="
+                        relative
+                        inline-block
+                        text-[14px]
+                        font-normal
+                        text-[#1d1b22]
+                        transition-all
+                        duration-300
+                        hover:text-[#121521]
+                        after:absolute
+                        after:bottom-[-3px]
+                        after:left-0
+                        after:h-[1px]
+                        after:w-full
+                        after:origin-left
+                        after:scale-x-0
+                        after:bg-[#121521]
+                        after:transition-transform
+                        after:duration-300
+                        hover:after:scale-x-100
+                        lg:text-[15px]
+                      "
                     >
                       {label}
                     </a>
@@ -144,16 +238,46 @@ function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-foote
               </ul>
             </div>
 
+            {/* ================= POLICIES ================= */}
             <div>
-              <h4 className="text-[0.70rem] font-bold text-[#1d1b22] sm:text-[0.95rem]">
+              <h4
+                className="
+                  text-[15px]
+                  font-bold
+                  text-[#1d1b22]
+                  xl:text-[16px]
+                "
+              >
                 Policies
               </h4>
-              <ul className="mt-5 space-y-3 text-[0.96rem] text-[#1d1b22]">
+
+              <ul className="mt-5 space-y-[17px]">
                 {policyLinks.map(({ label, href }) => (
                   <li key={label}>
                     <a
                       href={href}
-                      className="relative inline-block cursor-pointer transition-all duration-300 hover:text-[#121521] after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-full after:origin-left after:scale-x-0 after:bg-[#121521] after:transition-transform after:duration-300 hover:after:scale-x-100"
+                      className="
+                        relative
+                        inline-block
+                        text-[14px]
+                        font-normal
+                        text-[#1d1b22]
+                        transition-all
+                        duration-300
+                        hover:text-[#121521]
+                        after:absolute
+                        after:bottom-[-3px]
+                        after:left-0
+                        after:h-[1px]
+                        after:w-full
+                        after:origin-left
+                        after:scale-x-0
+                        after:bg-[#121521]
+                        after:transition-transform
+                        after:duration-300
+                        hover:after:scale-x-100
+                        lg:text-[15px]
+                      "
                     >
                       {label}
                     </a>
@@ -161,74 +285,166 @@ function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-foote
                 ))}
               </ul>
             </div>
-          </div>
 
-          <div className="w-full md:max-w-[330px] lg:max-w-[360px]">
-            <h4 className="text-[0.70rem] font-bold text-[#1d1b22] sm:text-[0.95rem]">
-              Get In Touch
-            </h4>
-
-            <p className="mt-5 max-w-[390px] text-[0.96rem] leading-7 font-medium text-[#1d1b22]/80">
-              Japam Sevak will help you with tracking, return, cancellations, and more.
-            </p>
-
-            <a
-              href="#"
-              className="mt-3 inline-block text-[0.96rem] font-medium text-[#1d1b22] underline underline-offset-4 hover:text-[#121521] transition-all duration-300"
-            >
-              Chat with Sevak
-            </a>
-
-            <h5 className="mt-7 text-[0.98rem] font-bold text-[#1d1b22] sm:text-[1rem]">
-              Japam Spiritual Private Limited
-            </h5>
-
-            <p className="mt-3 max-w-[390px] text-[0.96rem] leading-7 font-medium text-[#1d1b22]/85">
-              414, Phase 9 Industrial Area,
-              <br />
-              SAS Nagar,
-              <br />
-              160062, India
-            </p>
-
-            <div className="mt-6 flex w-full max-w-[300px] items-center overflow-hidden rounded-xl border border-[#b7ab9d] bg-[#f3eee5] shadow-sm transition-colors duration-300 focus-within:border-[#6c5f52] focus-within:ring-2 focus-within:ring-[#6c5f52]/20">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="w-full bg-transparent px-4 py-3 text-[0.96rem] text-[#1d1b22] placeholder:text-[#6a6059] outline-none"
-              />
-              <button
-                type="button"
-                aria-label="Submit email"
-                className="flex h-[52px] w-[52px] items-center justify-center border-l border-[#b7ab9d] bg-[#f7f3ee] text-[#1d1b22] transition-colors duration-300 hover:bg-[#e8dfd2]"
+            {/* ================= GET IN TOUCH ================= */}
+            <div className="w-full">
+              <h4
+                className="
+                  text-[15px]
+                  font-bold
+                  text-[#1d1b22]
+                  xl:text-[16px]
+                "
               >
-                <FaArrowRight className="h-4 w-4" />
-              </button>
+                Get In Touch
+              </h4>
+
+              <p
+                className="
+                  mt-5
+                  max-w-[340px]
+                  text-[14px]
+                  font-medium
+                  leading-[1.65]
+                  text-[#1d1b22]
+                  lg:text-[15px]
+                "
+              >
+                Japam Sevak will help you with tracking, return,
+                cancellations, and more.
+              </p>
+
+              <a
+                href="#"
+                className="
+                  mt-4
+                  inline-block
+                  text-[14px]
+                  font-medium
+                  text-[#1d1b22]
+                  underline
+                  underline-offset-4
+                  transition-all
+                  duration-300
+                  hover:text-[#121521]
+                  lg:text-[15px]
+                "
+              >
+                Chat with Sevak
+              </a>
+
+              <h5
+                className="
+                  mt-6
+                  text-[15px]
+                  font-bold
+                  text-[#1d1b22]
+                  lg:text-[16px]
+                "
+              >
+                Japam Spiritual Private Limited
+              </h5>
+
+              <p
+                className="
+                  mt-3
+                  max-w-[350px]
+                  text-[14px]
+                  font-medium
+                  italic
+                  leading-[1.65]
+                  text-[#1d1b22]
+                  lg:text-[15px]
+                "
+              >
+                414, Phase 9 Industrial Area, SAS Nagar,
+                <br />
+                160062, India
+              </p>
+
+              {/* EMAIL BOX */}
+              <div
+                className="
+                  mt-6
+                  flex
+                  h-[48px]
+                  w-full
+                  max-w-[285px]
+                  items-center
+                  overflow-hidden
+                  rounded-[7px]
+                  border
+                  border-[#c8baa6]
+                  bg-[#fff8ed]
+                  transition-all
+                  duration-300
+                  focus-within:border-[#8b7d6b]
+                "
+              >
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="
+                    h-full
+                    min-w-0
+                    flex-1
+                    bg-transparent
+                    px-4
+                    text-[13px]
+                    text-[#1d1b22]
+                    outline-none
+                    placeholder:text-[#9b9186]
+                  "
+                />
+
+                <button
+                  type="button"
+                  aria-label="Submit email"
+                  className="
+                    flex
+                    h-full
+                    w-[50px]
+                    shrink-0
+                    items-center
+                    justify-center
+                    text-[#292633]
+                    transition-all
+                    duration-300
+                    hover:bg-[#f3e6d2]
+                  "
+                >
+                  <FaArrowRight className="h-[17px] w-[17px]" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Mobile Layout - Visible Only on Mobile */}
-        <div className="md:hidden flex flex-col pt-6 pb-6">
-          {/* Mobile Logo and Social Section */}
-          <div className="mb-6 pb-6 border-b border-[#c7bca8]">
-            <div className="mb-4">
+        {/* ================= MOBILE ================= */}
+        <div className="block md:hidden">
+
+          {/* BRAND SECTION */}
+          <div className="pt-8 pb-7">
+
+            <div className="mb-5">
               <img
                 src={logoUrl}
                 alt="Japam logo"
-                className="h-auto w-[120px] max-w-full object-contain"
+                className="h-auto w-[135px] object-contain"
               />
             </div>
 
-            <h3 className="text-[0.95rem] font-bold leading-tight text-[#1d1b22]">
+            <h3 className="text-[15px] font-bold leading-tight">
               Authentic Spiritual Accessories
             </h3>
 
-            <p className="mt-3 text-[0.80rem] leading-5 font-medium text-[#1d1b22]/80">
-              Bringing stories of Indian tradition alive through our unique range of wearables, decor, and puja accessories.
+            <p className="mt-3 max-w-[390px] text-[13px] font-medium leading-[1.65]">
+              Bringing stories of Indian tradition alive through our unique
+              range of wearables, decor, and puja accessories.
             </p>
 
-            <div className="mt-4 flex items-center gap-3">
+            {/* MOBILE SOCIAL ICONS */}
+            <div className="mt-5 flex items-center gap-4">
               {socialLinks.map(({ label, href, Icon }) => (
                 <a
                   key={label}
@@ -236,28 +452,47 @@ function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-foote
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1f2430] text-[#1f2430] transition-all duration-300 hover:scale-110"
+                  className="
+                    flex
+                    h-8
+                    w-8
+                    items-center
+                    justify-center
+                    text-[#292633]
+                    transition-all
+                    duration-300
+                    hover:scale-110
+                  "
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-[20px] w-[20px]" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Mobile Accordions */}
+          {/* MOBILE ACCORDIONS */}
           <div>
-            {/* Quick Links Accordion */}
+
+            {/* QUICK LINKS */}
             <AccordionSection
               title="Quick Links"
               isOpen={openAccordions.quickLinks}
               onToggle={() => toggleAccordion("quickLinks")}
             >
-              <ul className="space-y-2 pl-0">
+              <ul className="pb-4">
                 {quickLinks.map(({ label, href }) => (
-                  <li key={label} className="text-[0.85rem] text-[#1d1b22]">
+                  <li key={label}>
                     <a
                       href={href}
-                      className="block py-2 hover:text-[#121521] transition-colors duration-300"
+                      className="
+                        block
+                        py-2
+                        text-[13px]
+                        text-[#1d1b22]
+                        transition-colors
+                        duration-300
+                        hover:text-[#121521]
+                      "
                     >
                       {label}
                     </a>
@@ -266,18 +501,26 @@ function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-foote
               </ul>
             </AccordionSection>
 
-            {/* Policies Accordion */}
+            {/* POLICIES */}
             <AccordionSection
               title="Policies"
               isOpen={openAccordions.policies}
               onToggle={() => toggleAccordion("policies")}
             >
-              <ul className="space-y-2 pl-0">
+              <ul className="pb-4">
                 {policyLinks.map(({ label, href }) => (
-                  <li key={label} className="text-[0.85rem] text-[#1d1b22]">
+                  <li key={label}>
                     <a
                       href={href}
-                      className="block py-2 hover:text-[#121521] transition-colors duration-300"
+                      className="
+                        block
+                        py-2
+                        text-[13px]
+                        text-[#1d1b22]
+                        transition-colors
+                        duration-300
+                        hover:text-[#121521]
+                      "
                     >
                       {label}
                     </a>
@@ -286,60 +529,116 @@ function Footer({ logoUrl = "https://japam.in/cdn/shop/files/Copy_of_japam-foote
               </ul>
             </AccordionSection>
 
-            {/* Get In Touch Accordion */}
+            {/* GET IN TOUCH */}
             <AccordionSection
               title="Get In Touch"
               isOpen={openAccordions.getInTouch}
               onToggle={() => toggleAccordion("getInTouch")}
             >
-              <div className="pb-2">
-                <p className="text-[0.85rem] leading-5 font-medium text-[#1d1b22]/80 mb-3">
-                  Japam Sevak will help you with tracking, return, cancellations, and more.
+              <div className="pb-5 pt-1">
+
+                <p className="text-[13px] font-medium leading-[1.6]">
+                  Japam Sevak will help you with tracking, return,
+                  cancellations, and more.
                 </p>
 
                 <a
                   href="#"
-                  className="inline-block text-[0.85rem] font-medium text-[#1d1b22] underline underline-offset-2 hover:text-[#121521] transition-all duration-300 mb-4"
+                  className="
+                    mt-3
+                    inline-block
+                    text-[13px]
+                    font-medium
+                    underline
+                    underline-offset-4
+                  "
                 >
                   Chat with Sevak
                 </a>
 
-                <h5 className="text-[0.85rem] font-bold text-[#1d1b22] mt-3 mb-2">
+                <h5 className="mt-5 text-[14px] font-bold">
                   Japam Spiritual Private Limited
                 </h5>
 
-                <p className="text-[0.85rem] leading-5 font-medium text-[#1d1b22]/85 mb-3">
-                  414, Phase 9 Industrial Area,
-                  <br />
-                  SAS Nagar,
+                <p className="mt-2 text-[13px] font-medium italic leading-[1.6]">
+                  414, Phase 9 Industrial Area, SAS Nagar,
                   <br />
                   160062, India
                 </p>
 
-                <div className="flex w-full items-center overflow-hidden rounded-lg border border-[#b7ab9d] bg-[#f3eee5] shadow-sm transition-colors duration-300 focus-within:border-[#6c5f52] focus-within:ring-2 focus-within:ring-[#6c5f52]/20">
+                {/* MOBILE EMAIL */}
+                <div
+                  className="
+                    mt-5
+                    flex
+                    h-[45px]
+                    w-full
+                    items-center
+                    overflow-hidden
+                    rounded-[7px]
+                    border
+                    border-[#c8baa6]
+                    bg-[#fff8ed]
+                  "
+                >
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="w-full bg-transparent px-3 py-2 text-[0.80rem] text-[#1d1b22] placeholder:text-[#6a6059] outline-none"
+                    className="
+                      h-full
+                      min-w-0
+                      flex-1
+                      bg-transparent
+                      px-3
+                      text-[13px]
+                      outline-none
+                      placeholder:text-[#9b9186]
+                    "
                   />
+
                   <button
                     type="button"
                     aria-label="Submit email"
-                    className="flex h-[40px] w-[40px] items-center justify-center border-l border-[#b7ab9d] bg-[#f7f3ee] text-[#1d1b22] transition-colors duration-300 hover:bg-[#e8dfd2]"
+                    className="
+                      flex
+                      h-full
+                      w-[45px]
+                      shrink-0
+                      items-center
+                      justify-center
+                      text-[#292633]
+                    "
                   >
-                    <FaArrowRight className="h-3.5 w-3.5" />
+                    <FaArrowRight className="h-4 w-4" />
                   </button>
                 </div>
               </div>
             </AccordionSection>
+
           </div>
+
+          {/* MOBILE BOTTOM SPACE */}
+          <div className="h-5" />
         </div>
 
-        <div className="border-t border-[#c7bca8]">
-          <div className="flex items-center justify-between py-5 text-[0.95rem] text-[#1d1b22]/80">
+        {/* ================= COPYRIGHT ================= */}
+        <div className="border-t border-[#cfc2ae]">
+          <div
+            className="
+              flex
+              min-h-[70px]
+              items-center
+              justify-start
+              py-5
+              text-[12px]
+              text-[#1d1b22]
+              sm:text-[13px]
+            "
+          >
             <p>© 2026 Japam.</p>
           </div>
         </div>
+
       </div>
     </footer>
   );

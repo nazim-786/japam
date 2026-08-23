@@ -1,33 +1,56 @@
-import { useState } from "react";
-import {products} from "../data/products";
+import { useEffect, useState } from "react";
+import { products } from "../data/products";
 import {
   FaStar,
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
-const ITEMS_PER_VIEW = 4;
 
 const ProductCarousel = () => {
   const [imageIndexes, setImageIndexes] = useState({});
-   const [startIndex, setStartIndex] = useState(0);
-  
+  const [startIndex, setStartIndex] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(4);
+
+  // Responsive products count
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        // Mobile
+        setItemsPerView(1);
+      } else if (window.innerWidth < 1024) {
+        // Tablet / iPad
+        setItemsPerView(2);
+      } else {
+        // Laptop / Desktop
+        setItemsPerView(4);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const visibleProducts = products.slice(
     startIndex,
-    startIndex + ITEMS_PER_VIEW
+    startIndex + itemsPerView
   );
 
-const nextProducts = () => {
-  if (startIndex < products.length - ITEMS_PER_VIEW) {
-    setStartIndex((prev) => prev + 1);
-  }
-};
+  const nextProducts = () => {
+    if (startIndex < products.length - itemsPerView) {
+      setStartIndex((prev) => prev + 1);
+    }
+  };
 
-const prevProducts = () => {
-  if (startIndex > 0) {
-    setStartIndex((prev) => prev - 1);
-  }
-};
+  const prevProducts = () => {
+    if (startIndex > 0) {
+      setStartIndex((prev) => prev - 1);
+    }
+  };
 
   const nextImage = (id, totalImages, e) => {
     e.stopPropagation();
@@ -53,9 +76,9 @@ const prevProducts = () => {
     }));
   };
 
-  return (  
+  return (
     <section className="bg-[#fff3df] pt-6 pb-10">
-      <div className="max-w-[1400px] mx-auto px-7">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-7">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
@@ -64,17 +87,17 @@ const prevProducts = () => {
           </h2>
 
           <button
-              className="
-    text-[17px]
-    text-[#1F2340]
-    border-b border-[#1F2340]
-    pb-[2px]
-    hover:opacity-80
-    transition-all duration-300
-  "
->
-  View all
-</button>
+            className="
+              text-[15px] sm:text-[17px]
+              text-[#1F2340]
+              border-b border-[#1F2340]
+              pb-[2px]
+              hover:opacity-80
+              transition-all duration-300
+            "
+          >
+            View all
+          </button>
         </div>
 
         <div className="relative">
@@ -85,14 +108,14 @@ const prevProducts = () => {
             <button
               onClick={nextProducts}
               disabled={
-                startIndex + ITEMS_PER_VIEW >= products.length
+                startIndex + itemsPerView >= products.length
               }
               className={`
                 w-12 h-12 rounded-full
                 flex items-center justify-center
                 shadow-md
                 ${
-                  startIndex + ITEMS_PER_VIEW >= products.length
+                  startIndex + itemsPerView >= products.length
                     ? "bg-gray-300 text-white cursor-not-allowed"
                     : "bg-[#2E3148] text-white"
                 }
@@ -140,32 +163,39 @@ const prevProducts = () => {
                   key={item.id}
                   className="group cursor-pointer"
                 >
+
                   {/* Image */}
                   <div className="relative overflow-hidden rounded-[10px]">
 
                     <img
                       src={images[currentIndex]}
                       alt={item.title}
-                      className="w-full h-[260px] sm:h-[300px] lg:h-[320px] object-cover"
+                      className="
+                        w-full
+                        h-[260px]
+                        sm:h-[300px]
+                        lg:h-[320px]
+                        object-cover
+                      "
                     />
 
                     {/* Discount */}
-                   <span
-              className="
-                     absolute top-0 left-0
-                    min-w-[80px]
-                         px-3
-    h-[32px]
-    bg-[#D94A43]
-    text-white
-    text-[12px]
-    font-semibold
-    flex items-center justify-center
-    rounded-br-md
-  "
->
-  {item.discount}
-</span>
+                    <span
+                      className="
+                        absolute top-0 left-0
+                        min-w-[80px]
+                        px-3
+                        h-[32px]
+                        bg-[#D94A43]
+                        text-white
+                        text-[12px]
+                        font-semibold
+                        flex items-center justify-center
+                        rounded-br-md
+                      "
+                    >
+                      {item.discount}
+                    </span>
 
                     {/* Prev Image */}
                     <button
@@ -224,11 +254,19 @@ const prevProducts = () => {
                   {/* Content */}
                   <div className="pt-4">
 
-                    <h3 className="text-[18px] font-semibold text-[#1F2340] leading-7 line-clamp-3 min-h-[78px] whitespace-pre-line">
+                    <h3 className="
+                      text-[18px]
+                      font-semibold
+                      text-[#1F2340]
+                      leading-7
+                      line-clamp-3
+                      min-h-[78px]
+                      whitespace-pre-line
+                    ">
                       {item.title}
                     </h3>
 
-                    <div className="flex items-center gap-2 ">
+                    <div className="flex items-center gap-2">
                       <div className="flex text-[#D94A43]">
                         {[...Array(item.rating)].map(
                           (_, index) => (
@@ -265,7 +303,7 @@ const prevProducts = () => {
             className="absolute top-0 left-0 h-full bg-[#1F2340]"
             style={{
               width: `${
-                ((startIndex + ITEMS_PER_VIEW) /
+                ((startIndex + itemsPerView) /
                   products.length) *
                 100
               }%`,
