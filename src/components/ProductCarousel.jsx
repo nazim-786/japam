@@ -90,21 +90,11 @@ const ProductCarousel = () => {
 
     const currentX = e.touches[0].clientX;
     const difference = currentX - touchStart;
-
-    /*
-      First card ko finger ke saath move karna.
-      Thoda resistance bhi diya hai,
-      jisse swipe natural feel ho.
-    */
-
     let movement = difference;
 
-    // First product par right drag ko restrict karo
     if (startIndex === 0 && movement > 0) {
       movement = movement * 0.25;
     }
-
-    // Last product par left drag ko restrict karo
     if (
       startIndex >= products.length - itemsPerView &&
       movement < 0
@@ -133,18 +123,7 @@ const ProductCarousel = () => {
     */
 
     const cardWidth = screenWidth - 120;
-
-    /*
-      Gap between cards
-    */
-
     const gap = 12;
-
-    /*
-      Total distance one card needs
-      to move.
-    */
-
     const slideDistance = cardWidth + gap;
 
     /*
@@ -162,10 +141,7 @@ const ProductCarousel = () => {
       startIndex < products.length - itemsPerView
     ) {
       setIsAnimating(true);
-
-      // Card ko completely left le jao
       setDragX(-slideDistance);
-
       setTimeout(() => {
         setStartIndex((prev) => prev + 1);
 
@@ -189,10 +165,7 @@ const ProductCarousel = () => {
       startIndex > 0
     ) {
       setIsAnimating(true);
-
-      // Card ko right side le jao
       setDragX(slideDistance);
-
       setTimeout(() => {
         setStartIndex((prev) => prev - 1);
 
@@ -278,7 +251,7 @@ const ProductCarousel = () => {
 
         <div className="flex justify-between items-center mb-4">
 
-          <h2 className="text-[28px] sm:text-[34px] lg:text-[42px] font-bold">
+          <h2 className="text-[28px] sm:text-[34px] lg:text-[42px] font-bold text-[#1F2340]">
             Best Rakhi Ever
           </h2>
 
