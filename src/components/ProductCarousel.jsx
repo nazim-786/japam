@@ -11,23 +11,23 @@ const ProductCarousel = () => {
   const [startIndex, setStartIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(4);
 
-  // Mobile swipe states
+  // Mobile swipe
   const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Responsive products count
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
         // Mobile
-        // 2 products render honge,
-        // lekin CSS se first card large aur second card ka preview dikhega
         setItemsPerView(2);
       } else if (window.innerWidth < 1024) {
         // Tablet / iPad
         setItemsPerView(2);
       } else {
-        // Laptop / Desktop
+        // Desktop
         setItemsPerView(4);
       }
     };
@@ -41,25 +41,27 @@ const ProductCarousel = () => {
     };
   }, []);
 
-  // Screen size change hone par carousel ko beginning par le aao
+  // Reset carousel when screen size changes
   useEffect(() => {
     setStartIndex(0);
+    setDragX(0);
   }, [itemsPerView]);
 
-  // Visible products
   const visibleProducts = products.slice(
     startIndex,
     startIndex + itemsPerView
   );
 
-  // Next product
+  // =========================
+  // PRODUCT NAVIGATION
+  // =========================
+
   const nextProducts = () => {
     if (startIndex < products.length - itemsPerView) {
       setStartIndex((prev) => prev + 1);
     }
   };
 
-  // Previous product
   const prevProducts = () => {
     if (startIndex > 0) {
       setStartIndex((prev) => prev - 1);
@@ -67,50 +69,154 @@ const ProductCarousel = () => {
   };
 
   // =========================
-  // MOBILE SWIPE
+  // MOBILE TOUCH START
   // =========================
 
   const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
+    if (window.innerWidth >= 640) return;
+    if (isAnimating) return;
 
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) {
-      return;
-    }
-
-    const distance = touchStart - touchEnd;
-
-    // Minimum swipe distance
-    const minSwipeDistance = 50;
-
-    // Small movement ko swipe nahi maanenge
-    if (Math.abs(distance) < minSwipeDistance) {
-      setTouchStart(0);
-      setTouchEnd(0);
-      return;
-    }
-
-    // Swipe LEFT
-    if (distance > 0) {
-      nextProducts();
-    }
-
-    // Swipe RIGHT
-    if (distance < 0) {
-      prevProducts();
-    }
-
-    setTouchStart(0);
-    setTouchEnd(0);
+    setTouchStart(e.touches[0].clientX);
+    setIsDragging(true);
   };
 
   // =========================
-  // PRODUCT IMAGE NEXT
+  // MOBILE TOUCH MOVE
+  // =========================
+
+  const handleTouchMove = (e) => {
+    if (window.innerWidth >= 640) return;
+    if (!isDragging || isAnimating) return;
+
+    const currentX = e.touches[0].clientX;
+    const difference = currentX - touchStart;
+
+    /*
+      First card ko finger ke saath move karna.
+      Thoda resistance bhi diya hai,
+      jisse swipe natural feel ho.
+    */
+
+    let movement = difference;
+
+    // First product par right drag ko restrict karo
+    if (startIndex === 0 && movement > 0) {
+      movement = movement * 0.25;
+    }
+
+    // Last product par left drag ko restrict karo
+    if (
+      startIndex >= products.length - itemsPerView &&
+      movement < 0
+    ) {
+      movement = movement * 0.25;
+    }
+
+    setDragX(movement);
+  };
+
+  // =========================
+  // MOBILE TOUCH END
+  // =========================
+
+  const handleTouchEnd = () => {
+    if (window.innerWidth >= 640) return;
+    if (!isDragging || isAnimating) return;
+
+    setIsDragging(false);
+
+    const screenWidth = window.innerWidth;
+
+    /*
+      Mobile card width:
+      viewport - 120px
+    */
+
+    const cardWidth = screenWidth - 120;
+
+    /*
+      Gap between cards
+    */
+
+    const gap = 12;
+
+    /*
+      Total distance one card needs
+      to move.
+    */
+
+    const slideDistance = cardWidth + gap;
+
+    /*
+      Minimum swipe distance
+    */
+
+    const minSwipeDistance = 50;
+
+    // =========================
+    // SWIPE LEFT
+    // =========================
+
+    if (
+      dragX < -minSwipeDistance &&
+      startIndex < products.length - itemsPerView
+    ) {
+      setIsAnimating(true);
+
+      // Card ko completely left le jao
+      setDragX(-slideDistance);
+
+      setTimeout(() => {
+        setStartIndex((prev) => prev + 1);
+
+        // Animation reset
+        setDragX(0);
+
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 20);
+      }, 300);
+
+      return;
+    }
+
+    // =========================
+    // SWIPE RIGHT
+    // =========================
+
+    if (
+      dragX > minSwipeDistance &&
+      startIndex > 0
+    ) {
+      setIsAnimating(true);
+
+      // Card ko right side le jao
+      setDragX(slideDistance);
+
+      setTimeout(() => {
+        setStartIndex((prev) => prev - 1);
+
+        // Animation reset
+        setDragX(0);
+
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 20);
+      }, 300);
+
+      return;
+    }
+
+    // =========================
+    // NOT ENOUGH SWIPE
+    // CARD BACK TO ORIGINAL POSITION
+    // =========================
+
+    setDragX(0);
+  };
+
+  // =========================
+  // IMAGE NEXT
   // =========================
 
   const nextImage = (id, totalImages, e) => {
@@ -126,7 +232,7 @@ const ProductCarousel = () => {
   };
 
   // =========================
-  // PRODUCT IMAGE PREVIOUS
+  // IMAGE PREVIOUS
   // =========================
 
   const prevImage = (id, totalImages, e) => {
@@ -156,7 +262,9 @@ const ProductCarousel = () => {
 
   const progressWidth =
     products.length > 0
-      ? ((startIndex + itemsPerView) / products.length) * 100
+      ? ((startIndex + itemsPerView) /
+          products.length) *
+        100
       : 0;
 
   return (
@@ -193,14 +301,15 @@ const ProductCarousel = () => {
         </div>
 
         {/* =========================
-            PRODUCT CAROUSEL
+            CAROUSEL AREA
         ========================= */}
 
         <div className="relative">
 
           {/* =========================
-              DESKTOP / TABLET SECTION ARROWS
-              HIDDEN ON MOBILE
+              SECTION ARROWS
+
+              Mobile hidden
           ========================= */}
 
           <div
@@ -218,12 +327,11 @@ const ProductCarousel = () => {
             "
           >
 
-            {/* NEXT PRODUCT */}
+            {/* NEXT */}
 
             <button
               onClick={nextProducts}
               disabled={isLastProduct}
-              aria-label="Next products"
               className={`
                 w-11
                 h-11
@@ -247,12 +355,11 @@ const ProductCarousel = () => {
               <FaChevronRight />
             </button>
 
-            {/* PREVIOUS PRODUCT */}
+            {/* PREVIOUS */}
 
             <button
               onClick={prevProducts}
               disabled={isFirstProduct}
-              aria-label="Previous products"
               className={`
                 w-11
                 h-11
@@ -288,14 +395,11 @@ const ProductCarousel = () => {
               sm:grid
               sm:grid-cols-2
               lg:grid-cols-4
-
               gap-3
               sm:gap-5
-
               overflow-hidden
-
-              touch-pan-y
               select-none
+              touch-pan-y
             "
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -323,12 +427,21 @@ const ProductCarousel = () => {
                     group
                     cursor-pointer
                     flex-shrink-0
-
                     w-[calc(100vw-120px)]
-
                     sm:w-auto
                     sm:flex-shrink
                   "
+                  style={{
+                    transform:
+                      window.innerWidth < 640
+                        ? `translateX(${dragX}px)`
+                        : "none",
+
+                    transition:
+                      isDragging
+                        ? "none"
+                        : "transform 300ms ease-out",
+                  }}
                 >
 
                   {/* =========================
@@ -356,36 +469,28 @@ const ProductCarousel = () => {
                       "
                     />
 
-                    {/* =========================
-                        DISCOUNT
-                    ========================= */}
+                    {/* DISCOUNT */}
 
                     <span
                       className="
                         absolute
                         top-0
                         left-0
-
                         min-w-[80px]
                         px-3
                         h-[32px]
-
                         bg-[#D94A43]
                         text-white
-
                         text-[12px]
                         font-semibold
-
                         flex
                         items-center
                         justify-center
-
                         rounded-br-md
                       "
                     >
                       {item.discount}
                     </span>
-
 
                     {/* =========================
                         PREVIOUS IMAGE
@@ -402,7 +507,6 @@ const ProductCarousel = () => {
                         )
                       }
                       disabled={isFirstImage}
-                      aria-label="Previous image"
                       className={`
                         hidden
                         sm:flex
@@ -414,7 +518,6 @@ const ProductCarousel = () => {
 
                         w-10
                         h-10
-
                         rounded-full
 
                         items-center
@@ -436,7 +539,6 @@ const ProductCarousel = () => {
                       <FaChevronLeft />
                     </button>
 
-
                     {/* =========================
                         NEXT IMAGE
 
@@ -452,7 +554,6 @@ const ProductCarousel = () => {
                         )
                       }
                       disabled={isLastImage}
-                      aria-label="Next image"
                       className={`
                         hidden
                         sm:flex
@@ -464,7 +565,6 @@ const ProductCarousel = () => {
 
                         w-10
                         h-10
-
                         rounded-full
 
                         items-center
@@ -488,9 +588,8 @@ const ProductCarousel = () => {
 
                   </div>
 
-
                   {/* =========================
-                      PRODUCT CONTENT
+                      CONTENT
                   ========================= */}
 
                   <div className="pt-4">
@@ -511,10 +610,7 @@ const ProductCarousel = () => {
                       {item.title}
                     </h3>
 
-
-                    {/* =========================
-                        RATING
-                    ========================= */}
+                    {/* RATING */}
 
                     <div className="flex items-center gap-2">
 
@@ -534,10 +630,7 @@ const ProductCarousel = () => {
 
                     </div>
 
-
-                    {/* =========================
-                        PRICE
-                    ========================= */}
+                    {/* PRICE */}
 
                     <div className="flex items-center gap-3 mt-2">
 
@@ -573,7 +666,6 @@ const ProductCarousel = () => {
 
         </div>
 
-
         {/* =========================
             PROGRESS LINE
         ========================= */}
@@ -598,7 +690,10 @@ const ProductCarousel = () => {
               duration-300
             "
             style={{
-              width: `${Math.min(progressWidth, 100)}%`,
+              width: `${Math.min(
+                progressWidth,
+                100
+              )}%`,
             }}
           />
 
