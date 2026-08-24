@@ -126,11 +126,12 @@ const SpiritualJewellery = () => {
               md:text-[36px]
               lg:text-[45px]
 
-              font-bold
+              !font-bold
               text-[#1F2340]
 
               leading-[1.2]
             "
+            style={{ color: "#000000" }}
           >
             Spiritual Jewellery
           </h2>
