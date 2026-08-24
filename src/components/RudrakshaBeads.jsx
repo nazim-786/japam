@@ -8,193 +8,425 @@ import { rudraksha } from "../data/rudraksha";
 
 const RudrakshaSection = () => {
   const [start, setStart] = useState(0);
-  const [currentImages, setCurrentImages] = useState({});
 
-  const visibleCards = 4;
+  const [visibleCards, setVisibleCards] = useState(4);
+
+  React.useEffect(() => {
+    const updateCards = () => {
+      if (window.innerWidth < 640) {
+        setVisibleCards(1);
+      } else if (window.innerWidth < 768) {
+        setVisibleCards(2);
+      } else if (window.innerWidth < 1024) {
+        setVisibleCards(3);
+      } else {
+        setVisibleCards(4);
+      }
+    };
+
+    updateCards();
+
+    window.addEventListener("resize", updateCards);
+
+    return () => {
+      window.removeEventListener("resize", updateCards);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const maxStart = Math.max(
+      0,
+      rudraksha.length - visibleCards
+    );
+
+    if (start > maxStart) {
+      setStart(maxStart);
+    }
+  }, [visibleCards, start]);
 
   const nextSlide = () => {
-    if (start < rudraksha.length - visibleCards) {
-      setStart(start + 1);
+    const maxStart = Math.max(
+      0,
+      rudraksha.length - visibleCards
+    );
+
+    if (start < maxStart) {
+      setStart((prev) => prev + 1);
     }
   };
 
   const prevSlide = () => {
     if (start > 0) {
-      setStart(start - 1);
+      setStart((prev) => prev - 1);
     }
   };
 
-  const nextImage = (id, totalImages) => {
-    setCurrentImages((prev) => ({
-      ...prev,
-      [id]: ((prev[id] || 0) + 1) % totalImages,
-    }));
-  };
-
-  const prevImage = (id, totalImages) => {
-    setCurrentImages((prev) => ({
-      ...prev,
-      [id]:
-        ((prev[id] || 0) - 1 + totalImages) %
-        totalImages,
-    }));
-  };
-
   const progress =
-    rudraksha.length > 0
+    rudraksha.length > visibleCards
       ? ((start + visibleCards) / rudraksha.length) * 100
-      : 0;
+      : 100;
 
   return (
-    <section className="bg-[#FFF3DF] py-9">
-      <div className="max-w-[1370px] mx-auto px-8">
-        {/* Heading */}
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-[30px] font-bold text-[#1f2340]">
+    <section className="bg-[#FFF3DF] py-6 sm:py-8 lg:py-9 overflow-hidden">
+      <div className="max-w-[1370px] mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* ================= HEADER ================= */}
+        <div className="flex justify-between items-center mb-5 sm:mb-6">
+          <h2
+            className="
+              text-[21px]
+              sm:text-[25px]
+              md:text-[28px]
+              lg:text-[30px]
+              font-bold
+              text-[#1f2340]
+            "
+          >
             Single Rudraksha Beads
           </h2>
 
-          <button className="text-[17px] text-[#1f2340] underline">
+          <button
+            className="
+              text-[14px]
+              sm:text-[15px]
+              md:text-[16px]
+              lg:text-[17px]
+              text-[#1f2340]
+              underline
+              whitespace-nowrap
+            "
+          >
             View all
           </button>
         </div>
 
-        <div className="flex gap-8">
-          {/* Left Banner */}
-          <div className="w-[350px] flex-shrink-0">
-            <div className="overflow-hidden cursor-pointer group">
+        {/* ================= MAIN CONTENT ================= */}
+        <div className="flex gap-4 md:gap-5 lg:gap-8">
+
+          {/* ================= LEFT BANNER ================= */}
+          <div
+            className="
+              hidden
+              md:block
+              md:w-[230px]
+              lg:w-[280px]
+              xl:w-[350px]
+              flex-shrink-0
+            "
+          >
+            <div className="overflow-hidden cursor-pointer">
+
               <img
                 src="https://japam.in/cdn/shop/files/IMG-2146.jpg?v=1702795235&width=900"
-                alt=""
-                className="h-[370px] w-full object-cover"
+                alt="Original Nepali Rudraksha"
+                className="
+                  w-full
+                  h-[260px]
+                  lg:h-[310px]
+                  xl:h-[370px]
+                  object-cover
+                "
               />
 
-              <div className="bg-[#C63E3A] px-5 py-9 text-white">
-                <h3 className="text-[24px] font-bold whitespace-nowrap mb-2">
+              <div
+                className="
+                  bg-[#C63E3A]
+                  px-4
+                  lg:px-5
+                  py-5
+                  lg:py-7
+                  xl:py-9
+                  text-white
+                "
+              >
+                <h3
+                  className="
+                    text-[17px]
+                    lg:text-[20px]
+                    xl:text-[24px]
+                    font-bold
+                    mb-2
+                    leading-tight
+                  "
+                >
                   Original Nepali Rudraksha
                 </h3>
 
-                <p className="text-[15px]">
+                <p
+                  className="
+                    text-[12px]
+                    lg:text-[14px]
+                    xl:text-[15px]
+                  "
+                >
                   1 Mukhi to 11 Mukhi - with certificate
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Right Slider */}
-          <div className="flex-1 relative overflow-hidden group">
-            <div className="flex gap-5">
-              {rudraksha
-                .slice(start, start + visibleCards)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="w-[210px] flex-shrink-0"
-                  >
-                    {/* Image Slider */}
-                    <div className="relative group overflow-hidden">
-                      <img
-                        src={
-                          item.images[
-                            currentImages[item.id] || 0
-                          ]
-                        }
-                        alt={item.title}
-                        className="h-[170px] w-full object-cover"
-                      />
+          {/* ================= PRODUCT SLIDER ================= */}
+          <div className="flex-1 min-w-0 relative">
 
-                      {/* Discount */}
-                      <div className="absolute top-0 left-0 bg-[#D64040] text-white px-1 py-1 text-[12px] font-semibold z-10">
-                        {item.discount}
+            <div className="overflow-hidden">
+
+              <div
+                className="
+                  flex
+                  gap-3
+                  sm:gap-4
+                  lg:gap-5
+                "
+              >
+                {rudraksha
+                  .slice(start, start + visibleCards)
+                  .map((item) => (
+
+                    <div
+                      key={item.id}
+                      className="
+                        flex-shrink-0
+                        w-full
+                        sm:w-[calc((100%-12px)/2)]
+                        md:w-[calc((100%-32px)/3)]
+                        lg:w-[calc((100%-60px)/4)]
+                      "
+                    >
+
+                      {/* ================= PRODUCT IMAGE ================= */}
+                      <div className="relative overflow-hidden">
+
+                        <img
+                          src={item.images[0]}
+                          alt={item.title}
+                          className="
+                            w-full
+                            aspect-square
+                            object-cover
+                            bg-white
+                          "
+                        />
+
+                        {/* DISCOUNT */}
+                        <div
+                          className="
+                            absolute
+                            top-0
+                            left-0
+                            bg-[#D64040]
+                            text-white
+                            px-2
+                            py-1
+                            text-[10px]
+                            sm:text-[11px]
+                            md:text-[12px]
+                            font-semibold
+                          "
+                        >
+                          {item.discount}
+                        </div>
+
                       </div>
 
-                      {/* Previous Image */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          prevImage(
-                            item.id,
-                            item.images.length
-                          );
-                        }}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center"
+                      {/* ================= TITLE ================= */}
+                      <h3
+                        className="
+                          mt-2
+                          sm:mt-3
+                          text-[13px]
+                          sm:text-[14px]
+                          lg:text-[15px]
+                          font-semibold
+                          text-[#1f2340]
+                          leading-5
+                          sm:leading-6
+                          min-h-[40px]
+                          sm:min-h-[48px]
+                          lg:min-h-[60px]
+                        "
                       >
-                        <FaChevronLeft size={12} />
-                      </button>
+                        {item.title}
+                      </h3>
 
-                      {/* Next Image */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          nextImage(
-                            item.id,
-                            item.images.length
-                          );
-                        }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center"
+                      {/* ================= RATING ================= */}
+                      <div
+                        className="
+                          flex
+                          items-center
+                          gap-0.5
+                          sm:gap-1
+                          mt-1
+                        "
                       >
-                        <FaChevronRight size={12} />
-                      </button>
+                        {[...Array(5)].map((_, i) => (
+                          <FaStar
+                            key={i}
+                            size={11}
+                            className="sm:w-[13px] sm:h-[13px]"
+                            color="#D64040"
+                          />
+                        ))}
 
-                  
+                        <span
+                          className="
+                            text-[11px]
+                            sm:text-[12px]
+                            md:text-[14px]
+                            ml-1
+                            text-[#1f2340]
+                          "
+                        >
+                          ({item.reviews})
+                        </span>
+                      </div>
+
+                      {/* ================= PRICE ================= */}
+                      <div
+                        className="
+                          flex
+                          flex-wrap
+                          items-center
+                          gap-1
+                          sm:gap-2
+                          mt-1
+                          sm:mt-2
+                        "
+                      >
+                        <span
+                          className="
+                            text-[15px]
+                            sm:text-[17px]
+                            lg:text-[18px]
+                            font-bold
+                            text-[#1f2340]
+                          "
+                        >
+                          ₹ {item.price}
+                        </span>
+
+                        <span
+                          className="
+                            line-through
+                            text-[11px]
+                            sm:text-[13px]
+                            lg:text-[14px]
+                            text-gray-500
+                          "
+                        >
+                          ₹ {item.oldPrice}
+                        </span>
+                      </div>
+
                     </div>
-
-                    {/* Title */}
-                    <h3 className="mt-3 text-[15px] font-semibold text-[#1f2340] leading-6 min-h-[60px]">
-                      {item.title}
-                    </h3>
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 mt-1">
-                      {[...Array(5)].map((_, i) => (
-                        <FaStar
-                          key={i}
-                          size={13}
-                          color="#D64040"
-                        />
-                      ))}
-
-                      <span className="text-[14px] ml-1 text-[#1f2340]">
-                        ({item.reviews})
-                      </span>
-                    </div>
-
-                    {/* Price */}
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="text-[18px] font-bold text-[#1f2340]">
-                        ₹ {item.price}
-                      </span>
-
-                      <span className="line-through text-[14px] text-gray-500">
-                        ₹ {item.oldPrice}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
             </div>
 
-            {/* Section Slider Arrows */}
+            {/* ================================================= */}
+            {/* OUTER SLIDER ARROWS */}
+            {/* ================================================= */}
+
+            {/* NEXT */}
             <button
               onClick={nextSlide}
-              className="absolute right-[-10px] top-[44%] w-10 h-10 rounded-full bg-[#363047] text-white flex items-center justify-center opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+              disabled={
+                start >= rudraksha.length - visibleCards
+              }
+              className="
+                absolute
+                right-0
+                lg:right-[-10px]
+                top-[38%]
+
+                w-8
+                h-8
+                sm:w-9
+                sm:h-9
+                lg:w-10
+                lg:h-10
+
+                rounded-full
+                bg-[#363047]
+                text-white
+
+                flex
+                items-center
+                justify-center
+
+                shadow
+
+                transition-all
+                duration-300
+
+                disabled:opacity-30
+              "
             >
-              <FaChevronRight size={14} />
+              <FaChevronRight size={12} />
             </button>
 
+            {/* PREVIOUS */}
             <button
               onClick={prevSlide}
-              className="absolute right-[-10px] top-[55%] w-10 h-10 rounded-full bg-[#8b8b8b] text-white flex items-center justify-center opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+              disabled={start === 0}
+              className="
+                absolute
+                right-0
+                lg:right-[-10px]
+                top-[52%]
+
+                w-8
+                h-8
+                sm:w-9
+                sm:h-9
+                lg:w-10
+                lg:h-10
+
+                rounded-full
+                bg-[#8b8b8b]
+                text-white
+
+                flex
+                items-center
+                justify-center
+
+                shadow
+
+                transition-all
+                duration-300
+
+                disabled:opacity-30
+              "
             >
-              <FaChevronLeft size={14} />
+              <FaChevronLeft size={12} />
             </button>
 
-            {/* Progress Bar */}
-            <div className="mt-10 w-[88%] mx-auto h-[2px] bg-[#cfc6b9]">
+            {/* ================= PROGRESS BAR ================= */}
+            <div
+              className="
+                mt-7
+                sm:mt-8
+                lg:mt-10
+                w-full
+                sm:w-[92%]
+                lg:w-[88%]
+                mx-auto
+                h-[2px]
+                bg-[#cfc6b9]
+              "
+            >
               <div
-                className="h-full bg-[#1f2340] transition-all duration-300"
-                style={{ width: `${progress}%` }}
+                className="
+                  h-full
+                  bg-[#1f2340]
+                  transition-all
+                  duration-300
+                "
+                style={{
+                  width: `${Math.min(progress, 100)}%`,
+                }}
               />
             </div>
+
           </div>
         </div>
       </div>
@@ -202,4 +434,4 @@ const RudrakshaSection = () => {
   );
 };
 
-export default RudrakshaSection; 
+export default RudrakshaSection;

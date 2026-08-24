@@ -12,7 +12,7 @@ function AnnouncementBar() {
       setCurrentIndex((prevIndex) =>
         prevIndex === messages.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(timer);
   }, [messages.length]);

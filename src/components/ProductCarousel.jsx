@@ -251,7 +251,7 @@ const ProductCarousel = () => {
 
         <div className="flex justify-between items-center mb-4">
 
-          <h2   className="!text-[13px] sm:!text-[21px] lg:!text-[25px] font-bold"
+          <h2   className="!text-[14px] sm:!text-[23px] lg:!text-[27px] font-bold"
   style={{ color: "#000000" }}
 >
             Best Rakhi Ever

@@ -36,7 +36,7 @@ export default function ProductCard({ product }) {
         <img
           src={product.images[currentImage]}
           alt={product.title}
-          className="w-full h-[300px] md:h-[330px] object-cover transition-transform duration-500"
+          className="w-full aspect-square object-cover transition-transform duration-500"
         />
 
         {/* Left Arrow */}
