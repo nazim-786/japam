@@ -121,10 +121,11 @@ const SaveCombos = () => {
               sm:text-[30px]
               md:text-[36px]
               lg:text-[45px]
-              font-bold
+              !font-bold
               text-[#1F2340]
               leading-[1.2]
             "
+            style={{ color: "#000000" }}
           >
             Save More With Combos
           </h2>

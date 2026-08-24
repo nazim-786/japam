@@ -79,11 +79,12 @@ export default function LabTestedSection() {
                 text-3xl
                 font-semibold
                 tracking-tight
-                text-black
+                !text-black
                 sm:text-4xl
                 md:text-5xl
                 lg:text-6xl
               "
+              style={{ color: "#000000" }}
             >
               Asli Wearables - Lab Tested
             </h2>

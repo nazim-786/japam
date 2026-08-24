@@ -78,9 +78,10 @@ const RudrakshaSection = () => {
               sm:text-[25px]
               md:text-[28px]
               lg:text-[30px]
-              font-bold
+              !font-bold
               text-[#1f2340]
             "
+            style={{ color: "#000000" }}
           >
             Single Rudraksha Beads
           </h2>

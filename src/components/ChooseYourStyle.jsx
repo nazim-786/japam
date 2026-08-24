@@ -44,12 +44,14 @@ const ChooseYourStyle = () => {
             md:text-[44px]
             lg:text-[56px]
             xl:text-[64px]
-            font-bold
+            !font-bold
             text-[#1f2340]
             mb-5
             sm:mb-6
           "
+          style={{ color: "#000000" }}
         >
+
           Choose Your Style
         </h2>
 

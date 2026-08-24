@@ -260,7 +260,9 @@ export default function CustomerFeedback() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Heading */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-extrabold text-gray-800 text-center leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl !font-extrabold text-gray-800 text-center leading-tight"
+          style={{ color: "#000000" }}
+          >
             Over 1 Million+ Happy Customers
             <span className="ml-1 sm:ml-2">
               ❤️🙏
@@ -354,11 +356,13 @@ export default function CustomerFeedback() {
           sm:text-3xl
           md:text-4xl
           lg:text-4xl
-          font-extrabold
+          !font-extrabold
           text-gray-800
           text-center
           leading-tight
-        ">
+        "
+        style={{ color: "#000000" }}
+        >
           Over 1 Million+ Happy Customers
           <span className="ml-1 sm:ml-2">
             ❤️🙏

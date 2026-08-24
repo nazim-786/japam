@@ -8,17 +8,17 @@ const SiddhDeliverySection = () => {
           className="
             text-center
             text-[#1f2340]
-            font-black
+            !font-black
             font-sans
             tracking-[0.5px]
             leading-[1.1]
-
             text-[25px]
             sm:text-[32px]
             md:text-[40px]
             lg:text-[50px]
             xl:text-[58px]
           "
+          style={{ color: "#000000" }}
         >
           Siddh Products Delivered To Your Home
         </h2>

@@ -1,51 +1,78 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCard from "./ProductCard";
 import { products } from "../data/products";
 
 export default function ExploreEnergyStones() {
-  const [touchStart, setTouchStart] = useState(0);
-  const [dragX, setDragX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  // Number of products to display in each row
+  const productsPerRow = 4;
 
-  const handleTouchStart = (e) => {
-    if (isAnimating) return;
+  // Divide products into separate rows
+  const rows = [];
 
-    setTouchStart(e.touches[0].clientX);
-    setDragX(0);
-    setIsDragging(true);
-  };
+  for (let i = 0; i < products.length; i += productsPerRow) {
+    rows.push(products.slice(i, i + productsPerRow));
+  }
 
-  const handleTouchMove = (e) => {
-    if (!isDragging || isAnimating) return;
+  // Store a separate scroll container reference for each row
+  const rowRefs = useRef([]);
 
-    const currentX = e.touches[0].clientX;
-    const difference = currentX - touchStart;
+  // Store separate progress values for each row
+  const [progress, setProgress] = useState(rows.map(() => 0));
 
-    setDragX(difference);
-  };
+  useEffect(() => {
+    // Update the progress bar for the selected row
+    const handleScroll = (index) => {
+      const container = rowRefs.current[index];
 
-  const handleTouchEnd = () => {
-    if (!isDragging || isAnimating) return;
+      if (!container) return;
 
-    setIsDragging(false);
+      const maxScroll =
+        container.scrollWidth - container.clientWidth;
 
-    const minSwipeDistance = 50;
+      if (maxScroll <= 0) {
+        setProgress((prev) => {
+          const updated = [...prev];
+          updated[index] = 0;
+          return updated;
+        });
+        return;
+      }
 
-    // Swipe detected
-    if (Math.abs(dragX) > minSwipeDistance) {
-      setIsAnimating(true);
+      const currentProgress =
+        (container.scrollLeft / maxScroll) * 100;
 
-      // Small delay so the swipe feels smooth
-      setTimeout(() => {
-        setDragX(0);
-        setIsAnimating(false);
-      }, 300);
-    } else {
-      // Not enough swipe → return to original position
-      setDragX(0);
-    }
-  };
+      setProgress((prev) => {
+        const updated = [...prev];
+        updated[index] = currentProgress;
+        return updated;
+      });
+    };
+
+    // Store scroll event listeners for each row
+    const listeners = [];
+
+    rowRefs.current.forEach((container, index) => {
+      if (!container) return;
+
+      const listener = () => handleScroll(index);
+
+      container.addEventListener("scroll", listener, {
+        passive: true,
+      });
+
+      listeners.push({
+        container,
+        listener,
+      });
+    });
+
+    // Remove all scroll event listeners when the component unmounts
+    return () => {
+      listeners.forEach(({ container, listener }) => {
+        container.removeEventListener("scroll", listener);
+      });
+    };
+  }, [rows.length]);
 
   return (
     <section className="bg-[#fff3df] py-4">
@@ -53,8 +80,9 @@ export default function ExploreEnergyStones() {
 
         {/* Heading */}
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="!text-[22px] !font-bold !text-[#1f2940] !sm:text-[24px] !md:text-[28px]"
-          style={{ color: "#000000" }}
+          <h2
+            className="!text-[22px] !font-bold !text-[#1f2940] sm:!text-[24px] md:!text-[28px]"
+            style={{ color: "#000000" }}
           >
             Explore Energy Stones
           </h2>
@@ -64,64 +92,70 @@ export default function ExploreEnergyStones() {
           </button>
         </div>
 
-        {/* Products */}
-        <div
-          className="
-            overflow-hidden
-            lg:overflow-visible
-          "
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className={`
-              grid
-              grid-rows-5
-              grid-flow-col
-              auto-cols-[calc(100%-80px)]
-              gap-3
+        {/* Separate rows */}
+        <div className="flex flex-col gap-5">
 
-              overflow-x-auto
-              snap-x
-              snap-mandatory
-              scroll-smooth
+          {rows.map((row, rowIndex) => (
+            <div key={rowIndex} className="w-full">
 
-              [scrollbar-width:none]
-              [&::-webkit-scrollbar]:hidden
-
-              lg:grid-flow-row
-              lg:grid-rows-none
-              lg:grid-cols-4
-              lg:auto-cols-auto
-              lg:gap-6
-              lg:overflow-visible
-              lg:snap-none
-
-              ${
-                isDragging
-                  ? "transition-none"
-                  : "transition-transform duration-300 ease-out"
-              }
-            `}
-            style={{
-              transform: `translateX(${dragX}px)`,
-            }}
-          >
-            {products.map((product) => (
+              {/* Individual horizontal slider for each row */}
               <div
-                key={product.id}
+                ref={(el) => {
+                  rowRefs.current[rowIndex] = el;
+                }}
                 className="
-                  min-w-0
-                  snap-start
+                  flex
+                  gap-3
+                  overflow-x-auto
+                  snap-x
+                  snap-mandatory
+                  scroll-smooth
+                  [scrollbar-width:none]
+                  [&::-webkit-scrollbar]:hidden
+
+                  lg:grid
+                  lg:grid-cols-4
+                  lg:gap-6
+                  lg:overflow-visible
+                  lg:snap-none
                 "
               >
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        </div>
+                {row.map((product) => (
+                  <div
+                    key={product.id}
+                    className="
+                      min-w-[calc(100%-55px)]
+                      snap-start
 
+                      sm:min-w-[calc(50%-8px)]
+
+                      md:min-w-[calc(50%-8px)]
+
+                      lg:min-w-0
+                    "
+                  >
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Individual progress bar for each row */}
+              <div className="mt-3 h-[3px] w-full overflow-hidden rounded-full bg-[#e1d4c0] lg:hidden">
+                <div
+                  className="h-full rounded-full bg-[#1f2940] transition-all duration-150"
+                  style={{
+                    width: `${Math.max(
+                      8,
+                      progress[rowIndex] || 0
+                    )}%`,
+                  }}
+                />
+              </div>
+
+            </div>
+          ))}
+
+        </div>
       </div>
     </section>
   );
