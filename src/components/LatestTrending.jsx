@@ -212,6 +212,65 @@ const LatestTrending = () => {
     ...trendingProducts,
   ];
 
+  // Mobile swipe states
+  const [touchStart, setTouchStart] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Current mobile product
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleTouchStart = (e) => {
+    if (isAnimating) return;
+
+    setTouchStart(e.touches[0].clientX);
+    setIsDragging(true);
+    setDragX(0);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || isAnimating) return;
+
+    const currentX = e.touches[0].clientX;
+    const difference = currentX - touchStart;
+
+    setDragX(difference);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging || isAnimating) return;
+
+    setIsDragging(false);
+
+    const swipeThreshold = 50;
+
+    if (Math.abs(dragX) > swipeThreshold) {
+      setIsAnimating(true);
+
+      if (dragX < 0) {
+        // Swipe Left → Next
+        setCurrentIndex((prev) =>
+          Math.min(prev + 1, products.length - 1)
+        );
+      } else {
+        // Swipe Right → Previous
+        setCurrentIndex((prev) =>
+          Math.max(prev - 1, 0)
+        );
+      }
+
+      setDragX(0);
+
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 300);
+    } else {
+      // Small movement → Reset
+      setDragX(0);
+    }
+  };
+
   return (
     <section className="bg-[#fff3df] pt-0 pb-10">
       <div className="max-w-[1340px] mx-auto px-4 sm:px-5 md:px-6 lg:px-8">
@@ -219,52 +278,65 @@ const LatestTrending = () => {
         {/* Heading */}
         <h2
           className="
-            text-[22px]
-            sm:text-[24px]
-            md:text-[26px]
-            lg:text-[28px]
-            font-bold
-            text-[#16233d]
+            !text-[22px]
+            !sm:text-[24px]
+            !md:text-[26px]
+            !lg:text-[28px]
+            !font-bold
+            !text-[#16233d]
             pb-4
             sm:pb-5
           "
+          style={{ color: "#000000" }}
         >
           Latest & Trending
         </h2>
 
         {/* =====================================================
             MOBILE
-            One full product + next product partially visible
+            Touch Swipe Carousel
         ====================================================== */}
         <div
           className="
-            flex
-            gap-3
-            sm:gap-4
-            overflow-x-auto
             md:hidden
-            snap-x
-            snap-mandatory
+            overflow-hidden
             pb-3
-
-            [-ms-overflow-style:none]
-            [scrollbar-width:none]
-            [&::-webkit-scrollbar]:hidden
+            touch-pan-y
           "
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
-          {products.map((product, index) => (
-            <div
-              key={index}
-              className="
-                flex-none
-                w-[78%]
-                sm:w-[48%]
-                snap-start
-              "
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
+          <div
+            className={`
+              flex
+              gap-3
+              sm:gap-4
+              ${
+                isDragging
+                  ? "transition-none"
+                  : "transition-transform duration-300 ease-out"
+              }
+            `}
+            style={{
+              transform: `translateX(calc(-${
+                currentIndex * (window.innerWidth >= 640 ? 52 : 81)
+              }% + ${dragX}px))`,
+            }}
+          >
+            {products.map((product, index) => (
+              <div
+                key={index}
+                className="
+                  flex-none
+                  w-[78%]
+                  sm:w-[48%]
+                "
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* =====================================================

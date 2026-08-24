@@ -53,31 +53,17 @@ const ChooseYourStyle = () => {
           Choose Your Style
         </h2>
 
-        {/* Gallery */}
+        {/* 2 Rows x 2 Columns */}
         <div
           className="
-            flex
-            flex-wrap
-            lg:grid
-            lg:grid-cols-2
-            overflow-x-auto
-            lg:overflow-x-visible
-            overflow-y-hidden
+            grid
+            grid-cols-2
             gap-3
             sm:gap-4
             lg:gap-6
             mt-5
             sm:mt-7
-            pb-2
-            snap-x
-            snap-mandatory
-            scrollbar-hide
-            touch-pan-x
           "
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
         >
           {stylesData.map((item) => (
             <div
@@ -86,17 +72,11 @@ const ChooseYourStyle = () => {
                 relative
                 overflow-hidden
                 group
-                flex-shrink-0
-                snap-start
+                w-full
 
-                w-[70vw]
-                sm:w-[70vw]
-                md:w-[48%]
-                lg:w-full
-
-                h-[360px]
-                sm:h-[420px]
-                md:h-[460px]
+                h-[260px]
+                sm:h-[320px]
+                md:h-[380px]
                 lg:h-[520px]
                 xl:h-[570px]
               "
@@ -136,8 +116,8 @@ const ChooseYourStyle = () => {
                 <h3
                   className="
                     text-white
-                    text-[18px]
-                    sm:text-[22px]
+                    text-[16px]
+                    sm:text-[20px]
                     md:text-[25px]
                     lg:text-[30px]
                     font-bold
@@ -158,7 +138,7 @@ const ChooseYourStyle = () => {
                     border-2
                     border-white
                     text-white
-                    px-4
+                    px-3
                     sm:px-5
                     md:px-6
                     lg:px-8
@@ -168,7 +148,7 @@ const ChooseYourStyle = () => {
                     font-semibold
                     tracking-wide
                     uppercase
-                    text-[11px]
+                    text-[10px]
                     sm:text-[12px]
                     md:text-[14px]
                     lg:text-[16px]
