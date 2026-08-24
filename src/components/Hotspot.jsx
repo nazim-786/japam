@@ -182,16 +182,18 @@ export default function Hotspot({
               z-10
               m-0
               w-full
-              min-w-0
+              !min-w-0
               break-words
               [overflow-wrap:anywhere]
-              text-[14px]
-              font-semibold
+              !text-[14px]
+              !font-semibold
               leading-5
-              text-black
-              sm:text-lg
+              !text-black
+              !sm:text-lg
               sm:leading-6
+              
             "
+            style={{ color: "#000000" }}
           >
             {title}
           </h3>

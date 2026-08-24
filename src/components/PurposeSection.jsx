@@ -25,7 +25,9 @@ export default function ShopByPurpose() {
     <section className="bg-[#ffeed1] py-14">
   {/* Heading */}
   <div className="max-w-[1190px] mx-auto">
-    <h2 className="text-center text-[55px] font-bold text-[#1f2340] relative -top-5">
+    <h2 className="!text-center !text-[55px] !font-bold !text-[#1f2340] relative -top-5"
+    style={{ color: "#000000" }}
+    >
       Shop By Purpose
     </h2>
   </div>

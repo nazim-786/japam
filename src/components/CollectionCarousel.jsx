@@ -6,8 +6,11 @@ const CollectionCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(6);
 
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+  // Swipe states
+  const [touchStart, setTouchStart] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Responsive items per view
   useEffect(() => {
@@ -47,45 +50,88 @@ const CollectionCarousel = () => {
   }, [itemsPerView, maxIndex, currentIndex]);
 
   const nextSlide = () => {
+    if (isAnimating) return;
+
+    setIsAnimating(true);
+
     setCurrentIndex((prev) =>
       Math.min(prev + 1, maxIndex)
     );
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500);
   };
 
   const prevSlide = () => {
+    if (isAnimating) return;
+
+    setIsAnimating(true);
+
     setCurrentIndex((prev) =>
       Math.max(prev - 1, 0)
     );
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500);
   };
 
   // -------------------------
-  // TOUCH / SWIPE
+  // TOUCH / DRAG
   // -------------------------
 
   const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchEndX.current = e.touches[0].clientX;
+    if (isAnimating) return;
+
+    const startX = e.touches[0].clientX;
+
+    setTouchStart(startX);
+    setDragX(0);
+    setIsDragging(true);
   };
 
   const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
+    if (!isDragging || isAnimating) return;
+
+    const currentX = e.touches[0].clientX;
+    const difference = currentX - touchStart;
+
+    // Small resistance at first/last slide
+    if (
+      (currentIndex === 0 && difference > 0) ||
+      (currentIndex === maxIndex && difference < 0)
+    ) {
+      setDragX(difference * 0.25);
+      return;
+    }
+
+    setDragX(difference);
   };
 
   const handleTouchEnd = () => {
-    const distance =
-      touchStartX.current - touchEndX.current;
+    if (!isDragging || isAnimating) return;
+
+    setIsDragging(false);
 
     const minSwipeDistance = 50;
 
-    // Swipe left → next
-    if (distance > minSwipeDistance) {
+    // Swipe Left → Next
+    if (dragX < -minSwipeDistance) {
+      setDragX(0);
       nextSlide();
+      return;
     }
 
-    // Swipe right → previous
-    if (distance < -minSwipeDistance) {
+    // Swipe Right → Previous
+    if (dragX > minSwipeDistance) {
+      setDragX(0);
       prevSlide();
+      return;
     }
+
+    // Small swipe → return to original position
+    setDragX(0);
   };
 
   // Progress
@@ -112,14 +158,15 @@ const CollectionCarousel = () => {
               -top-3
               sm:-top-4
               z-20
-              text-[24px]
+              !text-[24px]
               sm:text-[30px]
               md:text-[34px]
               lg:text-[42px]
-              font-bold
-              text-[#16233d]
+              !font-bold
+              !text-[#16233d]
               whitespace-nowrap
             "
+            style={{ color: "#000000" }}
           >
             Shop Our Collections
           </h2>
@@ -209,16 +256,23 @@ const CollectionCarousel = () => {
             onTouchEnd={handleTouchEnd}
           >
             <div
-              className="
+              className={`
                 flex
-                transition-transform
-                duration-500
-                ease-in-out
-              "
+                ${
+                  isDragging
+                    ? "transition-none"
+                    : "transition-transform duration-500 ease-in-out"
+                }
+              `}
               style={{
-                transform: `translateX(-${
-                  currentIndex * (100 / itemsPerView)
-                }%)`,
+                transform: `
+                  translateX(
+                    calc(
+                      -${currentIndex * (100 / itemsPerView)}%
+                      + ${dragX}px
+                    )
+                  )
+                `,
               }}
             >
               {collections.map((item) => (
