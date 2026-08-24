@@ -53,11 +53,15 @@ const ChooseYourStyle = () => {
           Choose Your Style
         </h2>
 
-        {/* Horizontal Swipe */}
+        {/* Gallery */}
         <div
           className="
             flex
+            flex-wrap
+            lg:grid
+            lg:grid-cols-2
             overflow-x-auto
+            lg:overflow-x-visible
             overflow-y-hidden
             gap-3
             sm:gap-4
@@ -65,12 +69,9 @@ const ChooseYourStyle = () => {
             mt-5
             sm:mt-7
             pb-2
-
             snap-x
             snap-mandatory
-
             scrollbar-hide
-
             touch-pan-x
           "
           style={{
@@ -91,7 +92,7 @@ const ChooseYourStyle = () => {
                 w-[70vw]
                 sm:w-[70vw]
                 md:w-[48%]
-                lg:w-[calc(50%-12px)]
+                lg:w-full
 
                 h-[360px]
                 sm:h-[420px]
