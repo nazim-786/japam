@@ -8,15 +8,16 @@ import {
   FaChevronDown,
   FaCommentDots,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { CartContext } from "../context/cart-context";
 
 const navLinks = [
   {
     label: "Rudraksha",
     dropdown: [
-      "Rudraksha Braceletes",
-      "Rudraksha Malas",
-      "Nepali Rudraksha",
+      { label: "Rudraksha Braceletes", path: "/rudraksha/bracelets" },
+      { label: "Rudraksha Malas", path: "/rudraksha/malas" },
+      { label: "Nepali Rudraksha", path: "/rudraksha/nepali-rudraksha" },
     ],
   },
   {
@@ -366,29 +367,64 @@ function Navbar() {
                       "
                     />
 
-                    {link.dropdown.map((item) => (
-                      <li
-                        key={item}
-                        className="
-                          relative
-                          cursor-pointer
-                          border-l-[3px]
-                          border-transparent
-                          px-5
-                          py-2.5
-                          text-[14px]
-                          font-normal
-                          text-[#333]
-                          transition-all
-                          duration-150
-                          hover:border-[#d97757]
-                          hover:bg-[#f9f5f0]
-                          hover:text-[#d97757]
-                        "
-                      >
-                        {item}
-                      </li>
-                    ))}
+                    {link.dropdown.map((item) => {
+                      const itemLabel = typeof item === "string" ? item : item.label;
+                      const itemPath = typeof item === "string" ? "#" : item.path;
+
+                      if (typeof item === "object" && item !== null) {
+                        return (
+                          <li
+                            key={itemLabel}
+                            className="relative"
+                          >
+                            <Link
+                              to={itemPath}
+                              className="
+                                block
+                                border-l-[3px]
+                                border-transparent
+                                px-5
+                                py-2.5
+                                text-[14px]
+                                font-normal
+                                text-[#333]
+                                transition-all
+                                duration-150
+                                hover:border-[#d97757]
+                                hover:bg-[#f9f5f0]
+                                hover:text-[#d97757]
+                              "
+                            >
+                              {itemLabel}
+                            </Link>
+                          </li>
+                        );
+                      }
+
+                      return (
+                        <li
+                          key={item}
+                          className="
+                            relative
+                            cursor-pointer
+                            border-l-[3px]
+                            border-transparent
+                            px-5
+                            py-2.5
+                            text-[14px]
+                            font-normal
+                            text-[#333]
+                            transition-all
+                            duration-150
+                            hover:border-[#d97757]
+                            hover:bg-[#f9f5f0]
+                            hover:text-[#d97757]
+                          "
+                        >
+                          {item}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
             </li>
@@ -545,26 +581,57 @@ function Navbar() {
                   {link.dropdown.length > 0 && (
                     <div className="pb-2 pl-4">
 
-                      {link.dropdown.map((item) => (
-                        <div
-                          key={item}
-                          className="
-                            cursor-pointer
-                            border-b
-                            border-[#f5f5f5]
-                            py-2.5
-                            text-[13px]
-                            font-normal
-                            text-[#555]
-                            transition-colors
-                            duration-200
-                            hover:text-[#d97757]
-                            sm:text-[14px]
-                          "
-                        >
-                          {item}
-                        </div>
-                      ))}
+                      {link.dropdown.map((item) => {
+                        const itemLabel = typeof item === "string" ? item : item.label;
+                        const itemPath = typeof item === "string" ? "#" : item.path;
+
+                        if (typeof item === "object" && item !== null) {
+                          return (
+                            <Link
+                              key={itemLabel}
+                              to={itemPath}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="
+                                block
+                                cursor-pointer
+                                border-b
+                                border-[#f5f5f5]
+                                py-2.5
+                                text-[13px]
+                                font-normal
+                                text-[#555]
+                                transition-colors
+                                duration-200
+                                hover:text-[#d97757]
+                                sm:text-[14px]
+                              "
+                            >
+                              {itemLabel}
+                            </Link>
+                          );
+                        }
+
+                        return (
+                          <div
+                            key={item}
+                            className="
+                              cursor-pointer
+                              border-b
+                              border-[#f5f5f5]
+                              py-2.5
+                              text-[13px]
+                              font-normal
+                              text-[#555]
+                              transition-colors
+                              duration-200
+                              hover:text-[#d97757]
+                              sm:text-[14px]
+                            "
+                          >
+                            {item}
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
