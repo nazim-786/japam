@@ -23,6 +23,17 @@ import { CartProvider } from "./context/CartContext";
 import RudrakshaBracelets from "./pages/RudrakshaBracelets";
 import RudrakshaMalas from "./pages/RudrakshaMalas";
 import NepaliRudraksha from "./pages/NepaliRudraksha";
+import RoseQuartzWearables from "./pages/RoseQuartzWearables";
+import TigerEyeWearables from "./pages/TigerEyeWearables";
+import AmethystWearables from "./pages/AmethystWearables";
+import HematiteWearables from "./pages/HematiteWearables";
+import PyriteWearables from "./pages/PyriteWearables";
+import SpiritualBracelets from "./pages/SpiritualBracelets";
+import SpiritualNecklaces from "./pages/SpiritualNecklaces";
+import DiwaliCelebration from "./pages/DiwaliCelebration";
+import RakhiCelebration from "./pages/RakhiCelebration";
+import TrackOrder from "./pages/TrackOrder";
+import ContactUs from "./pages/ContactUs";
 
 function HomePage() {
   return (
@@ -65,8 +76,19 @@ function App() {
             path="/rudraksha/nepali-rudraksha"
             element={<NepaliRudraksha />}
           />
+          <Route path="/rose-quartz-wearables" element={<RoseQuartzWearables />} />
+          <Route path="/tiger-eye-wearables" element={<TigerEyeWearables />} />
+          <Route path="/amethyst-wearables" element={<AmethystWearables />} />
+          <Route path="/hematite-wearables" element={<HematiteWearables />} />
+          <Route path="/pyrite-wearables" element={<PyriteWearables />} />
+          <Route path="/spiritual-bracelets" element={<SpiritualBracelets />} />
+          <Route path="/spiritual-necklaces" element={<SpiritualNecklaces />} />
+          <Route path="/diwali-celebration" element={<DiwaliCelebration />} />
+          <Route path="/rakhi-celebration" element={<RakhiCelebration />} />
+          <Route path="/track-order" element={<TrackOrder />} />
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
-
+        <CustomerFeedback />
         <Footer />
       </BrowserRouter>
     </CartProvider>

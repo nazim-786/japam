@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaFilter, FaGripHorizontal, FaList, FaSlidersH, FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { productData } from "../data/rudrakshaBracelets";
 
 const purposeOptions = [
@@ -198,10 +199,10 @@ export default function RudrakshaBraceletsPage() {
   const visibleProducts = filteredProducts.slice(0, showCount);
 
   return (
-    <div className="min-h-screen bg-[#f4efe7] text-[#1f2340]">
+    <div className="min-h-screen bg-[#ffeed1] text-[#1f2340]">
       <div className="mx-auto max-w-[1360px] px-4 pb-12 pt-6 md:px-6 lg:px-8">
         <div className="mb-4 text-[12px] text-[#1f2340] md:text-[13px]">
-          <span>Home</span>
+          <Link to="/">Home</Link>
           <span className="mx-2">&gt;</span>
           <span className="font-medium">Rudraksha Malas</span>
         </div>

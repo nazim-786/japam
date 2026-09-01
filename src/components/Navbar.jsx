@@ -23,11 +23,11 @@ const navLinks = [
   {
     label: "Energy Stones",
     dropdown: [
-      "Pyrite Wearables",
-      "Rose Quartz Wearables",
-      "Tiger Eye Wearables",
-      "Amethyst Wearables",
-      "Hematite Wearables",
+      { label: "Pyrite Wearables", path: "/pyrite-wearables" },
+      { label: "Rose Quartz Wearables", path: "/rose-quartz-wearables" },
+      { label: "Tiger Eye Wearables", path: "/tiger-eye-wearables" },
+      { label: "Amethyst Wearables", path: "/amethyst-wearables" },
+      { label: "Hematite Wearables", path: "/hematite-wearables" },
     ],
   },
   {
@@ -45,22 +45,22 @@ const navLinks = [
   {
     label: "Spiritual Jewellery",
     dropdown: [
-      "Spiritual Bracelets",
-      "Spiritual Necklaces",
+      { label: "Spiritual Bracelets", path: "/spiritual-bracelets" },
+      { label: "Spiritual Necklaces", path: "/spiritual-necklaces" },
     ],
   },
   {
     label: "Gift Hampers",
     dropdown: [
-      "Diwali Celebration",
-      "Rakhi Celebration",
+      { label: "Diwali Celebration", path: "/diwali-celebration" },
+      { label: "Rakhi Celebration", path: "/rakhi-celebration" },
     ],
   },
   {
     label: "Support",
     dropdown: [
-      "Track My Order",
-      "Contact Us",
+      { label: "Track My Order", path: "/track-order" },
+      { label: "Contact Us", path: "/contact-us" },
       "Returns/Exchange",
     ],
   },
